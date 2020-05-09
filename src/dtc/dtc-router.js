@@ -1,30 +1,21 @@
 const express = require('express')
 const DTCService = require('./dtc-service')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const dtcRouter = express.Router()
 const jsonParser = express.json();
 
 dtcRouter
   .route('/:dtc_id')
-  .all((req, res, next) => {
-    DTCService.getById(
-      req.app.get('db'),
-      req.params.dtc_id
-    )
-      .then(dtc => {
-        if (!dtc) {
-          return res.status(404).json({
-            error: { message: `DTC doesn't exist.` }
-          })
-        }
-        res.dtc = dtc
-        next()
-      })
-      .catch(next)
+  .all(requireAuth)
+  .all(checkDTCExists)
+  .get((req, res) => {
+    res.json(DTCService.serializeDTC(res.dtc))
   })
 
 dtcRouter
-  .route(':dtc_id/comments/')
+  .route('/:dtc_id/comments/')
+  .all(requireAuth)
   .all(checkDTCExists)
   .get((req, res, next) => {
     DTCService.getCommentsForDTC(
@@ -75,7 +66,6 @@ dtcRouter
       .catch(next)
   })
 
-/* async/await syntax for promises */
 async function checkDTCExists(req, res, next) {
   try {
     const dtc = await DTCService.getById(
@@ -85,7 +75,7 @@ async function checkDTCExists(req, res, next) {
 
     if (!dtc)
       return res.status(404).json({
-        error: `DTC doesn't exist`
+        error: `DTC doesn't exist.`
       })
 
     res.dtc = dtc

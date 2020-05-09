@@ -1,9 +1,23 @@
 const xss = require("xss");
 
 const DTCService = {
+  getAllDTC(db) {
+    return db
+      .from("dtc")
+      .select(
+        "dtc.id",
+        "dtc.dtc",
+        "dtc.description",
+        "dtc.make_id",
+        db.raw(`count(DISTINCT comm) AS number_of_comments`)
+      )
+      .leftJoin("comments AS comm", "dtc.id", "comm.dtc_id")
+      .groupBy("dtc.id");
+  },
+
   getById(db, id) {
-    return db.from("dtc").select("*")
-      .where("id", id)
+    return DTCService.getAllDTC(db)
+      .where("dtc.id", id)
       .first();
   },
 
@@ -33,12 +47,18 @@ const DTCService = {
         )
       )
       .where("comm.dtc_id", dtc_id)
-      .leftJoin(
-        "users",
-        "comm.user_id",
-        "user.id"
-      )
+      .leftJoin("users", "comm.user_id", "user.id")
       .groupBy("comm.id", "user.id");
+  },
+
+  serializeDTC(dtc) {
+    return {
+      id: dtc.id,
+      dtc: dtc.dtc,
+      dtc: dtc.description,
+      dtc: make_id,
+      number_of_comments: Number(dtc.number_of_comments) || 0,
+    }
   },
 
   serializeDTCComments(comments) {
