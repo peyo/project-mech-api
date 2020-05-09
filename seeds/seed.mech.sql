@@ -1,14 +1,5 @@
 BEGIN;
 
-TRUNCATE
-  users,
-  make,
-  cars,
-  dtc,
-  comments,
-  vin
-  RESTART IDENTITY CASCADE;
-
 INSERT INTO users (username, nickname, password)
 VALUES
   ('peteryy@gmail.com', 'peter', 'password'),
@@ -22,6 +13,13 @@ VALUES
   ('Toyota'),
   ('Honda'),
   ('Chevrolet');
+
+INSERT INTO vin (vin, make)
+VALUES
+  ('JTD', 'Toyota'),
+  ('19X', 'Honda'),
+  ('1G1', 'Chevrolet'),
+  ('JHM', 'Honda');
 
 INSERT INTO cars (make, model, vin, user_id, make_id)
 VALUES
@@ -60,3 +58,5 @@ VALUES
   ('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '3', '2', '1'),
   ('Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, voluptatum nam culpa minus dolore ex nisi recusandae autem ipsa assumenda doloribus itaque? Quos enim itaque error fuga quaerat nesciunt ut?', NULL, '13', '2'),
   ('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur sequi sint beatae obcaecati voluptas veniam amet adipisci perferendis quo illum, dignissimos aspernatur ratione iusto, culpa quam neque impedit atque doloribus!', NULL, '14', '3');
+
+COMMIT;

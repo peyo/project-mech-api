@@ -3,3 +3,4 @@ CREATE TABLE vin (
   make TEXT NOT NULL,
   vin TEXT NOT NULL
 )
+

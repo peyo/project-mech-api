@@ -2,6 +2,7 @@ const express = require('express')
 const DTCService = require('./dtc-service')
 
 const dtcRouter = express.Router()
+const jsonParser = express.json();
 
 dtcRouter
   .route('/:dtc_id')
@@ -73,5 +74,26 @@ dtcRouter
       })
       .catch(next)
   })
+
+/* async/await syntax for promises */
+async function checkDTCExists(req, res, next) {
+  try {
+    const dtc = await DTCService.getById(
+      req.app.get('db'),
+      req.params.dtc_id
+    )
+
+    if (!dtc)
+      return res.status(404).json({
+        error: `DTC doesn't exist`
+      })
+
+    res.dtc = dtc
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 module.exports = dtcRouter

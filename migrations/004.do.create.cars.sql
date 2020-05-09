@@ -3,6 +3,8 @@ CREATE TABLE cars (
   make TEXT NOT NULL,
   model TEXT NOT NULL,
   vin TEXT,
+  vin_id INTEGER
+    REFERENCES vin(id) ON DELETE CASCADE,
   make_id INTEGER
     REFERENCES make(id) ON DELETE CASCADE NOT NULL,
   user_id INTEGER
