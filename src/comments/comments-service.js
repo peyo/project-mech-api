@@ -15,14 +15,6 @@ const CommentsService = {
       })
   },
 
-  getById(knex, id) {
-    return knex
-      .from('comments')
-      .select('*')
-      .where('id', id)
-      .first()
-  },
-
   deleteComment(knex, id) {
     return knex('comments')
       .where({ id })

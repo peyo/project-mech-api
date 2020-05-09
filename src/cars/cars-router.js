@@ -18,14 +18,6 @@ const serializeCar = car => ({
 
 carsRouter
   .route('/')
-  .get((req, res, next) => {
-    const knexInstance = req.app.get('db')
-    CarsService.getAllCars(knexInstance)
-      .then(cars => {
-        res.json(cars.map(serializeCar))
-      })
-      .catch(next)
-  })
   .post(jsonParser, (req, res, next) => {
     const { make, model, vin, user_id, make_id, date_created } = req.body
     const newCar = { make, model, vin, user_id, make_id }
@@ -72,7 +64,7 @@ carsRouter
       })
       .catch(next)
   })
-  .get((req, res, next) => {
+  .delete((req, res, next) => {
     CarsService.deleteDelete(
       req.app.get('db'),
       req.params.car_id

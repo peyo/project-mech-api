@@ -4,11 +4,11 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const usersRouter = require('./users/users-router');
+const authRouter = require('./auth/auth-router'); 
 const carsRouter = require('./cars/cars-router');
 const commentsRouter = require('./comments/comments-router');
 const dtcRouter = require('./dtc/dtc-router');
 const makeRouter = require('./make/make-router');
-const usersRouter = require('./users/users-router');
 const vinRouter = require('./vin/vin-router');
 const { NODE_ENV } = require("./config");
 
@@ -23,6 +23,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use('/api/users', usersRouter)
+app.use('/api/auth', authRouter)
 app.use('/api/cars', carsRouter)
 app.use('/api/comments', commentsRouter)
 app.use('/api/dtc', dtcRouter)

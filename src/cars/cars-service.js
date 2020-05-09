@@ -1,10 +1,6 @@
 const CarsService = {
-  getAllCars(knex) {
-    return knex.select('*').from('cars')
-  },
-
-  createCar(knex, newCar) {
-    return knex
+  insertCar(db, newCar) {
+    return db
       .insert(newCar)
       .into('cars')
       .returning('*')
@@ -13,22 +9,22 @@ const CarsService = {
       })
   },
 
-  getById(knex, id) {
-    return knex
+  getById(db, id) {
+    return db
       .from('cars')
       .select('*')
       .where('id', id)
       .first()
   },
 
-  deleteCar(knex, id) {
-    return knex('cars')
+  deleteCar(db, id) {
+    return db('cars')
       .where({ id })
       .delete()
   },
 
-  updateCar(knex, id, newCarFields) {
-    return knex('cars')
+  updateCar(db, id, newCarFields) {
+    return db('cars')
       .where({ id })
       .update(newCarFields)
   },

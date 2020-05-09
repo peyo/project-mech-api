@@ -1,10 +1,10 @@
 const MakeService = {
-  getAllMake(knex) {
-    return knex.select('*').from('make')
+  getAllMake(db) {
+    return db.select('*').from('make')
   },
 
-  getById(knex, id) {
-    return knex
+  getById(db, id) {
+    return db
       .from('make')
       .select('*')
       .where('id', id)
