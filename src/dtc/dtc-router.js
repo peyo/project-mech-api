@@ -48,8 +48,8 @@ dtcRouter
     .catch(next)
   })
   .patch(jsonParser, (req, res, next) => {
-    const { comment, date_created, date_modified, make_id, dtc_id, user_id } = req.body
-    const commentToUpdate = { comment, make_id, dtc_id, user_id }
+    const { comment, date_created, date_modified, make, dtc, username } = req.body
+    const commentToUpdate = { comment, make, dtc, username }
 
     const numberOfValues = Object.values(commentToUpdate).filter(Boolean).length
     if (numberOfValues === 0) {

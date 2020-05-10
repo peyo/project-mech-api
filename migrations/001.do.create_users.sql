@@ -3,5 +3,5 @@ CREATE TABLE users (
   username TEXT NOT NULL UNIQUE,
   nickname TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
-  date_created TIMESTAMP DEFAULT now() NOT NULL
+  date_created TIMESTAMPTZ DEFAULT now() NOT NULL
 );

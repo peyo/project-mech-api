@@ -9,8 +9,8 @@ const CommentsService = {
         "comm.comment",
         "comm.date_created",
         "comm.date_modified",
-        "comm.make_id",
-        "comm.dtc_id",
+        "comm.make_vin",
+        "comm.dtc",
         db.raw(
           `json_strip_nulls(
             row_to_json(
@@ -59,8 +59,8 @@ const CommentsService = {
       comment: xss(comment.comment),
       date_created: new Date(comment.date_created),
       date_modified: new Date(comment.date_modified) || null,
-      make: comment.make_id,
-      dtc_id: comment.dtc_id,
+      make: comment.make_vin,
+      dtc: comment.dtc,
       user: {
         id: user.id,
         username: user.username,

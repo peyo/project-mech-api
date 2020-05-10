@@ -8,7 +8,7 @@ const DTCService = {
         "dtc.id",
         "dtc.dtc",
         "dtc.description",
-        "dtc.make_id",
+        "dtc.make",
         db.raw(`count(DISTINCT comm) AS number_of_comments`)
       )
       .leftJoin("comments AS comm", "dtc.id", "comm.dtc_id")
@@ -29,7 +29,7 @@ const DTCService = {
         "comm.comment",
         "comm.date_created",
         "comm.date_modified",
-        "comm.make_id",
+        "comm.make",
         db.raw(
           `json_strip_nulls(
             row_to_json(
@@ -45,7 +45,7 @@ const DTCService = {
         )
       )
       .where("comm.dtc_id", dtc_id)
-      .leftJoin("users", "comm.user_id", "users.id")
+      .leftJoin("users", "comm.username", "users.id")
       .groupBy("comm.id", "users.id");
   },
 
@@ -54,7 +54,7 @@ const DTCService = {
       id: dtc.id,
       dtc: dtc.dtc,
       description: dtc.description,
-      make_id: dtc.make_id,
+      make: dtc.make,
       number_of_comments: Number(dtc.number_of_comments) || 0,
     };
   },
@@ -66,7 +66,7 @@ const DTCService = {
       comment: xss(comment.comment),
       date_created: new Date(comment.date_created),
       date_modified: new Date(comment.date_modified) || null,
-      make_id: comment.make_id,
+      make: comment.make,
       dtc_id: comment.dtc_id,
       user: {
         id: user.id,

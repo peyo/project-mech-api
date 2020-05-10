@@ -16,8 +16,8 @@ const VINMakeService = {
   serializeVINMake(vinmake) {
     return {
       id: vinmake.id,
-      vin: vinmake.vin,
-      make: vinmake.make
+      vin: vinmake.make_vin,
+      make: vinmake.short_vin
     }
   }
 }

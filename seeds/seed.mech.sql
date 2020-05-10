@@ -8,14 +8,14 @@ VALUES
   ('test789@gmail.com', 'test789', 'password789'),
   ('test012@gmail.com', 'test012', 'password012');
 
-INSERT INTO vinmake (vin, make)
+INSERT INTO vinmake (short_vin, make_vin)
 VALUES
   ('JTD', 'Toyota'),
   ('19X', 'Honda'),
   ('1G1', 'Chevrolet'),
   ('JHM', 'Honda');
 
-INSERT INTO cars (make, model, vin, user_id, make_id)
+INSERT INTO cars (make, model, vin, username, make_vin)
 VALUES
   ('Toyota', 'Prius', 'JTDKN3DU7F1906819', '1', '1'),
   ('Honda', 'Civic', '19XFC2F83HE211321', '2', '2'),
@@ -23,7 +23,7 @@ VALUES
   ('Toyota', 'Mirai', 'JTDBVRBD3GA000299', '4', '1'),
   ('Honda', 'Clarity', 'JHMZC5F1XJC008004', '5', '2');
 
-INSERT INTO dtc (dtc, description, make_id)
+INSERT INTO dtc (dtc, description, make)
 VALUES
   ('P1100','BARO Sensor Circuit','1'),
   ('P1120','Accelerator Pedal Position Sensor Circuit','1'),
@@ -42,7 +42,7 @@ VALUES
   ('P0102','Mass or Volume Air Flow Circuit Low Input', NULL),
   ('P0103','Mass or Volume Air Flow Circuit High Input', NULL);
 
-INSERT INTO comments (comment, make_id, dtc_id, user_id)
+INSERT INTO comments (comment, make_vin, dtc, username)
 VALUES
   ('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque?', '1', '1', '1'),
   ('Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, exercitationem cupiditate dignissimos est perspiciatis, nobis commodi alias saepe atque facilis labore sequi deleniti. Sint, adipisci facere! Velit temporibus debitis rerum.', '1', '2', '2'),

@@ -16,8 +16,8 @@ carsRouter
       .catch(next)
   })
   .post(jsonParser, (req, res, next) => {
-    const { make, model, vin, user_id, make_id, date_created } = req.body
-    const newCar = { make, model, vin, user_id, make_id }
+    const { make, model, vin, username, make_vin, date_created } = req.body
+    const newCar = { make, model, vin, username, make_vin }
     
     for (const [key, value] of Object.entries(newCar)) {
       if (value === null) {
@@ -61,8 +61,8 @@ carsRouter
       .catch(next)
   })
   .patch(jsonParser, (req, res, next) => {
-    const { make, model, vin, user_id, make_id, date_created } = req.body
-    const carToUpdate = { make, model, vin, user_id, make_id }
+    const { make, model, vin, username, make_vin, date_created } = req.body
+    const carToUpdate = { make, model, vin, username, make_vin }
 
     const numberOfValues = Object.values(carToUpdate).filter(Boolean).length
     if (numberOfValues === 0)

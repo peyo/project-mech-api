@@ -9,7 +9,7 @@ const CarsService = {
         "cars.make",
         "cars.model",
         "cars.vin",
-        "cars.make_id",
+        "cars.make_vin",
         "cars.date_created",
         db.raw(
           `json_strip_nulls(
@@ -25,7 +25,7 @@ const CarsService = {
           ) AS "user"`
         )
       )
-      .leftJoin("users", "cars.user_id", "users.id")
+      .leftJoin("users", "cars.username", "users.id")
       .groupBy("cars.id", "users.id")
   },
 
@@ -60,9 +60,9 @@ const CarsService = {
       make: car.make,
       model: xss(car.model),
       vin: xss(car.vin),
-      make_id: car.make_id,
+      make_vin: car.make_vin,
       date_created: new Date(car.date_created),
-      user: {
+      username: {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
