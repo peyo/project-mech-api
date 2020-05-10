@@ -16,7 +16,7 @@ users
 
 cars
 ```
-/ . . . . . . post
+/ . . . . . . . . . . . . post
 /:car_id . . . . . . get, delete, patch
 ```
 
@@ -27,7 +27,7 @@ comments
 
 dtc
 ```
-/:dtc_id . . . . . . get
+/:dtc_id . . . . . . . . . . . . get
 /:dtc_id/comments . . . . . . get, delete, patch
 ```
 
