@@ -9,25 +9,37 @@ auth
 /refresh . . . . . . post
 ```
 
-users<br/>
-└ / ........................ post
+users
+```
+/ . . . . . . post
+```
 
-cars<br/>
-└ / ........................ post<br/>
-└ /:car_id ................. get, delete, patch
+cars
+```
+/ . . . . . . post
+/:car_id . . . . . . get, delete, patch
+```
 
-comments<br/>
-└ / ........................ get
+comments
+```
+/ . . . . . . get
+```
 
-dtc<br/>
-└ /:dtc_id ................. get<br/>
-└ /:dtc_id/comments......... get, delete, patch
+dtc
+```
+/:dtc_id . . . . . . get
+/:dtc_id/comments . . . . . . get, delete, patch
+```
 
-make<br/>
-└ / ........................ get
+make
+```
+/ . . . . . . get
+```
 
-vin<br/>
-└ / ........................ get
+vin
+```
+/ . . . . . . get
+```
 
 ## To front-end
 See for more details: https://github.com/peyo/project-mech
