@@ -1,6 +1,6 @@
 # Mech API
 
-This API is the back.end for the Project Mech front-end.
+This API is the back-end for the Project Mech front-end.
 
 ## Routes
 auth
