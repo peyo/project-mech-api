@@ -3,7 +3,7 @@
 This API is the back.end for the Project Mech front-end.
 
 ## Routes
-auth
+auth<br/>
 └ /login ................... post<br/>
 └ /refresh ................. post
 
