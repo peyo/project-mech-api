@@ -2,6 +2,9 @@
 
 This API is the back-end for the Project Mech front-end.
 
+## Tech
+Nodejs, Knex, Express
+
 ## Routes
 auth
 ```
