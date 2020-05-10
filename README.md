@@ -3,7 +3,7 @@
 This API is the back-end for the Project Mech front-end.
 
 ## Tech
-Nodejs, Knex, Express
+Nodejs, Knex, Express, Postgres
 
 ## Routes
 auth
