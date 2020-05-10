@@ -4,5 +4,5 @@ CREATE TABLE dtc (
   description TEXT NOT NULL,
   probable_cause TEXT,
   make INTEGER
-    REFERENCES make(id) ON DELETE CASCADE
+    REFERENCES vinmake(id) ON DELETE CASCADE
 )

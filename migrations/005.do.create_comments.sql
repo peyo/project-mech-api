@@ -4,7 +4,7 @@ CREATE TABLE comments (
   date_created TIMESTAMP DEFAULT now() NOT NULL,
   date_modified TIMESTAMP,
   make INTEGER
-    REFERENCES make(id) ON DELETE CASCADE,
+    REFERENCES vinmake(id) ON DELETE CASCADE,
   dtc INTEGER
     REFERENCES dtc(id) ON DELETE CASCADE NOT NULL,
   user INTEGER

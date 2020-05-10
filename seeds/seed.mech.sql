@@ -8,13 +8,7 @@ VALUES
   ('test789@gmail.com', 'test789', 'password789'),
   ('test012@gmail.com', 'test012', 'password012');
 
-INSERT INTO make (make)
-VALUES
-  ('Toyota'),
-  ('Honda'),
-  ('Chevrolet');
-
-INSERT INTO vin (vin, make)
+INSERT INTO vinmake (vin, make)
 VALUES
   ('JTD', 'Toyota'),
   ('19X', 'Honda'),
