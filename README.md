@@ -1,5 +1,31 @@
 # Mech API
 
-This API works together with the project-mech repo. This is the backend.
+This API is the back.end for the Project Mech front-end.
 
-See: https://github.com/peyo/project-mech
+## Routes
+auth
+  /login                  post
+  /refresh                post
+
+users
+  /                       post
+
+cars
+  /                       post
+  /:car_id                get, delete, patch
+
+comments
+  /                       get
+
+dtc
+  /:dtc_id                get
+  /:dtc_id/comments       get, delete, patch
+
+make
+  /                       get
+
+vin
+  /                       get
+
+## To front-end
+See for more details: https://github.com/peyo/project-mech
