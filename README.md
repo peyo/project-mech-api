@@ -41,5 +41,5 @@ vin
 / . . . . . . get
 ```
 
-## To front-end
-See for more details: https://github.com/peyo/project-mech
+## Front-end
+https://github.com/peyo/project-mech
