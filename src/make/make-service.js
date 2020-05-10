@@ -1,6 +1,8 @@
 const MakeService = {
   getAllMake(db) {
-    return db.select('*').from('make')
+    return db
+      .select('*')
+      .from('make')
   },
 
   getById(db, id) {
@@ -9,6 +11,13 @@ const MakeService = {
       .select('*')
       .where('id', id)
       .first()
+  },
+
+  serializeMake(make) {
+    return {
+      id: make.id,
+      make: make.make
+    }
   }
 }
 

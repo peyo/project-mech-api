@@ -3,6 +3,6 @@ CREATE TABLE dtc (
   dtc TEXT NOT NULL,
   description TEXT NOT NULL,
   probable_cause TEXT,
-  make_id INTEGER
+  make INTEGER
     REFERENCES make(id) ON DELETE CASCADE
 )

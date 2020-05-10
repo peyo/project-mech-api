@@ -1,5 +1,7 @@
+const xss = require('xss')
+
 const CommentsService = {
-  getById(db, id) {
+  getAllComments(db) {
     return db
       .from("comments AS comm")
       .select(
@@ -9,22 +11,26 @@ const CommentsService = {
         "comm.date_modified",
         "comm.make_id",
         "comm.dtc_id",
-        "comm.user_id",
         db.raw(
           `json_strip_nulls(
             row_to_json(
               (SELECT tmp FROM (
                 SELECT
-                  user.id,
-                  user.username,
-                  user,nickname,
-                  user.date_created
+                  users.id,
+                  users.username,
+                  users.nickname,
+                  users.date_created
               ) tmp)
             )
-          )`
+          ) AS "user"`
         )
       )
-      .leftJoin("users", "comm.user_id", "user.id")
+      .leftJoin("users", "comm.user_id", "users.id")
+      .groupBy("comm.id", "users.id");
+  },
+
+  getById(db, id) {
+    return CommentsService.getAllComments(db)
       .where("comm.id", id)
       .first();
   },
@@ -35,9 +41,7 @@ const CommentsService = {
       .into("comments")
       .returning("*")
       .then((comment) => comment)
-      .then(comment => 
-        CommentsService.getById(db, comment.id)
-      )
+      .then((comment) => CommentsService.getById(db, comment.id));
   },
 
   deleteComment(db, id) {
@@ -49,22 +53,22 @@ const CommentsService = {
   },
 
   serializeComment(comment) {
-    const { user } = comment
+    const { user } = comment;
     return {
       id: comment.id,
-      comment: filterXSS(comment.comment),
+      comment: xss(comment.comment),
       date_created: new Date(comment.date_created),
       date_modified: new Date(comment.date_modified) || null,
-      make_id: comment.make_id,
+      make: comment.make_id,
       dtc_id: comment.dtc_id,
       user: {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
-        date_created: new Date(user.date_created)
-      }
-    }
-  }
+        date_created: new Date(user.date_created),
+      },
+    };
+  },
 };
 
 module.exports = CommentsService;

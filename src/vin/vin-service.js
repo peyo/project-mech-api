@@ -1,14 +1,24 @@
 const VINService = {
-  getAllVIN(knex) {
-    return knex.select('*').from('vin')
+  getAllVIN(db) {
+    return db
+      .select('*')
+      .from('vin')
   },
 
-  getById(knex, id) {
-    return knex
+  getById(db, id) {
+    return db
       .from('vin')
       .select('*')
       .where('id', id)
       .first()
+  },
+
+  serializeVIN(vin) {
+    return {
+      id: vin.id,
+      vin: vin.vin,
+      make: vin.make
+    }
   }
 }
 

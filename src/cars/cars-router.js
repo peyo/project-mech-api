@@ -1,23 +1,20 @@
 const path = require('path')
 const express = require('express')
-const xss = require('xss')
 const CarsService = require('./cars-service')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const carsRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeCar = car => ({
-  id: car.id,
-  make: xss(car.make),
-  model: xss(car.model),
-  vin: xss(car.vin),
-  user_id: car.user_id,
-  make_id: car.make_id,
-  date_created: car.date_created
-})
-
 carsRouter
   .route('/')
+  .get((req, res, next) => {
+    CarsService.getAllCars(req.app.get('db'))
+      .then(cars => {
+        res.json(cars.map(CarsService.serializeCar))
+      })
+      .catch(next)
+  })
   .post(jsonParser, (req, res, next) => {
     const { make, model, vin, user_id, make_id, date_created } = req.body
     const newCar = { make, model, vin, user_id, make_id }
@@ -48,21 +45,10 @@ carsRouter
 
 carsRouter
   .route('/:car_id')
-  .all((req, res, next) => {
-    CarsService.getById(
-      req.app.get('db'),
-      req.params.car_id
-    )
-      .then(car => {
-        if (!car) {
-          return res.status(404).json({
-            error: { message: `Car doesn't exist.` }
-          })
-        }
-        res.car = car
-        next()
-      })
-      .catch(next)
+  .all(requireAuth)
+  .all(checkCarExists)
+  .get((req, res) => {
+    res.json(CarsService.serializeCar(res.car))
   })
   .delete((req, res, next) => {
     CarsService.deleteDelete(
@@ -98,5 +84,24 @@ carsRouter
       })
       .catch(next)
   })
+
+async function checkCarExists(req, res, next) {
+  try {
+    const car = await CarsService.getById(
+      req.app.get('db'),
+      req.params.car_id
+    )
+
+    if (!car)
+      return res.status(404).json({
+        error: `Car doesn't exist`
+      })
+
+    res.car = car
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
 
 module.exports = carsRouter

@@ -30,54 +30,52 @@ const DTCService = {
         "comm.date_created",
         "comm.date_modified",
         "comm.make_id",
-        "comm.dtc_id",
-        "comm.user_id",
         db.raw(
           `json_strip_nulls(
             row_to_json(
               (SELECT tmp FROM (
                 SELECT
-                  user.id,
-                  user.username,
-                  user.nickname,
-                  user.date_created
+                  users.id,
+                  users.username,
+                  users.nickname,
+                  users.date_created
               ) tmp)
             )
           ) AS "user"`
         )
       )
       .where("comm.dtc_id", dtc_id)
-      .leftJoin("users", "comm.user_id", "user.id")
-      .groupBy("comm.id", "user.id");
+      .leftJoin("users", "comm.user_id", "users.id")
+      .groupBy("comm.id", "users.id");
   },
 
   serializeDTC(dtc) {
     return {
       id: dtc.id,
       dtc: dtc.dtc,
-      dtc: dtc.description,
-      dtc: make_id,
+      description: dtc.description,
+      make_id: dtc.make_id,
       number_of_comments: Number(dtc.number_of_comments) || 0,
-    }
+    };
   },
 
-  serializeDTCComments(comments) {
-    const { user } = comments;
+  serializeDTCComment(comment) {
+    const { user } = comment;
     return {
-      id: comments.id,
-      comment: xss(comments.comment),
-      date_created: new Date(comments.date_created),
-      date_modified: new Date(comments.date_modified) || null,
-      make_id: comments.make_id,
-      dtc_id: comments.dtc_id,
+      id: comment.id,
+      comment: xss(comment.comment),
+      date_created: new Date(comment.date_created),
+      date_modified: new Date(comment.date_modified) || null,
+      make_id: comment.make_id,
+      dtc_id: comment.dtc_id,
       user: {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
         date_created: new Date(user.date_created),
       },
-    };
+    }
   },
-};
+}
 
 module.exports = DTCService;

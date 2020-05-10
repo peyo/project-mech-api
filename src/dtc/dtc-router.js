@@ -6,6 +6,16 @@ const dtcRouter = express.Router()
 const jsonParser = express.json();
 
 dtcRouter
+  .route('/')
+  .get((req, res, next) => {
+    DTCService.getAllDTC(req.app.get('db'))
+      .then(dtc => {
+      res.json(dtc.map(DTCService.serializeDTC))
+      })
+    .catch(next)
+  })
+
+dtcRouter
   .route('/:dtc_id')
   .all(requireAuth)
   .all(checkDTCExists)

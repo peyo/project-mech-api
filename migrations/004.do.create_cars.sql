@@ -3,11 +3,11 @@ CREATE TABLE cars (
   make TEXT NOT NULL,
   model TEXT NOT NULL,
   vin TEXT,
-  vin_id INTEGER
+  vin_three INTEGER
     REFERENCES vin(id) ON DELETE CASCADE,
-  make_id INTEGER
+  vin_make INTEGER
     REFERENCES make(id) ON DELETE CASCADE NOT NULL,
-  user_id INTEGER
+  user INTEGER
     REFERENCES users(id) ON DELETE CASCADE NOT NULL,
   date_created TIMESTAMP DEFAULT now() NOT NULL
 )
