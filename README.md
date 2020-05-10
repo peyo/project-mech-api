@@ -7,24 +7,24 @@ auth<br/>
 └ /login ................... post<br/>
 └ /refresh ................. post
 
-users
+users<br/>
 └ / ........................ post
 
-cars
-└ / ........................ post
+cars<br/>
+└ / ........................ post<br/>
 └ /:car_id ................. get, delete, patch
 
-comments
+comments<br/>
 └ / ........................ get
 
-dtc
-└ /:dtc_id ................. get
+dtc<br/>
+└ /:dtc_id ................. get<br/>
 └ /:dtc_id/comments......... get, delete, patch
 
-make
+make<br/>
 └ / ........................ get
 
-vin
+vin<br/>
 └ / ........................ get
 
 ## To front-end
