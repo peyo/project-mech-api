@@ -4,28 +4,28 @@ This API is the back.end for the Project Mech front-end.
 
 ## Routes
 auth
-  /login                  post
-  /refresh                post
+└ /login ................... post
+└ /refresh ................. post
 
 users
-  /                       post
+└ / ........................ post
 
 cars
-  /                       post
-  /:car_id                get, delete, patch
+└ / ........................ post
+└ /:car_id ................. get, delete, patch
 
 comments
-  /                       get
+└ / ........................ get
 
 dtc
-  /:dtc_id                get
-  /:dtc_id/comments       get, delete, patch
+└ /:dtc_id ................. get
+└ /:dtc_id/comments......... get, delete, patch
 
 make
-  /                       get
+└ / ........................ get
 
 vin
-  /                       get
+└ / ........................ get
 
 ## To front-end
 See for more details: https://github.com/peyo/project-mech
