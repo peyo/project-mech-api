@@ -4,8 +4,8 @@ This API is the back.end for the Project Mech front-end.
 
 ## Routes
 auth
-> /login ................... post<br/>
-> /refresh ................. post
+> /login            post<br/>
+> /refresh.         post
 
 users<br/>
 └ / ........................ post
