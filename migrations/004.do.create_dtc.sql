@@ -3,6 +3,6 @@ CREATE TABLE dtc (
   dtc TEXT NOT NULL,
   description TEXT NOT NULL,
   probable_cause TEXT,
-  make INTEGER
+  vinmake_id INTEGER
     REFERENCES vinmake(id) ON DELETE CASCADE
 )

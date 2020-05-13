@@ -3,10 +3,10 @@ CREATE TABLE comments (
   comment TEXT NOT NULL,
   date_created TIMESTAMPTZ DEFAULT now() NOT NULL,
   date_modified TIMESTAMPTZ,
-  make_vin INTEGER
+  vinmake_id INTEGER
     REFERENCES vinmake(id) ON DELETE CASCADE,
-  dtc INTEGER
+  dtc_id INTEGER
     REFERENCES dtc(id) ON DELETE CASCADE NOT NULL,
-  username INTEGER
+  user_id INTEGER
     REFERENCES users(id) ON DELETE CASCADE NOT NULL
 )

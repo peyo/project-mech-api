@@ -17,16 +17,12 @@ dtcRouter
 
 dtcRouter
   .route('/:dtc_id')
-  .all(requireAuth)
-  .all(checkDTCExists)
   .get((req, res) => {
     res.json(DTCService.serializeDTC(res.dtc))
   })
 
 dtcRouter
   .route('/:dtc_id/comments/')
-  .all(requireAuth)
-  .all(checkDTCExists)
   .get((req, res, next) => {
     DTCService.getCommentsForDTC(
       req.app.get('db'),
@@ -48,8 +44,8 @@ dtcRouter
     .catch(next)
   })
   .patch(jsonParser, (req, res, next) => {
-    const { comment, date_created, date_modified, make, dtc, username } = req.body
-    const commentToUpdate = { comment, make, dtc, username }
+    const { comment, date_created, date_modified, vinmake_id, dtc_id, user_id } = req.body
+    const commentToUpdate = { comment, vinmake_id, dtc_id, user_id }
 
     const numberOfValues = Object.values(commentToUpdate).filter(Boolean).length
     if (numberOfValues === 0) {
@@ -62,7 +58,6 @@ dtcRouter
 
     commentToUpdate.date_created = date_created;
     commentToUpdate.date_modified = date_modified;
-    commentToUpdate.date_created = date_created;
 
     DTCService.updateComment(
       req.app.get('db'),

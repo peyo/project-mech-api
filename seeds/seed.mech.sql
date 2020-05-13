@@ -15,7 +15,7 @@ VALUES
   ('1G1', 'Chevrolet'),
   ('JHM', 'Honda');
 
-INSERT INTO cars (make, model, vin, username, make_vin)
+INSERT INTO cars (make, model, vin, user_id, vinmake_id)
 VALUES
   ('Toyota', 'Prius', 'JTDKN3DU7F1906819', '1', '1'),
   ('Honda', 'Civic', '19XFC2F83HE211321', '2', '2'),
@@ -23,7 +23,7 @@ VALUES
   ('Toyota', 'Mirai', 'JTDBVRBD3GA000299', '4', '1'),
   ('Honda', 'Clarity', 'JHMZC5F1XJC008004', '5', '2');
 
-INSERT INTO dtc (dtc, description, make)
+INSERT INTO dtc (dtc, description, vinmake_id)
 VALUES
   ('P1100','BARO Sensor Circuit','1'),
   ('P1120','Accelerator Pedal Position Sensor Circuit','1'),
@@ -42,7 +42,7 @@ VALUES
   ('P0102','Mass or Volume Air Flow Circuit Low Input', NULL),
   ('P0103','Mass or Volume Air Flow Circuit High Input', NULL);
 
-INSERT INTO comments (comment, make_vin, dtc, username)
+INSERT INTO comments (comment, vinmake_id, dtc_id, user_id)
 VALUES
   ('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque?', '1', '1', '1'),
   ('Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, exercitationem cupiditate dignissimos est perspiciatis, nobis commodi alias saepe atque facilis labore sequi deleniti. Sint, adipisci facere! Velit temporibus debitis rerum.', '1', '2', '2'),

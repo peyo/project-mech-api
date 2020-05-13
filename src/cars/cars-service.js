@@ -9,7 +9,7 @@ const CarsService = {
         "cars.make",
         "cars.model",
         "cars.vin",
-        "cars.make_vin",
+        "cars.vinmake_id",
         "cars.date_created",
         db.raw(
           `json_strip_nulls(
@@ -60,9 +60,9 @@ const CarsService = {
       make: car.make,
       model: xss(car.model),
       vin: xss(car.vin),
-      make_vin: car.make_vin,
+      vinmake_id: car.vinmake_id,
       date_created: new Date(car.date_created),
-      username: {
+      user_id: {
         id: user.id,
         username: user.username,
         nickname: user.nickname,

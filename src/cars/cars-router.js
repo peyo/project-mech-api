@@ -8,6 +8,7 @@ const jsonParser = express.json()
 
 carsRouter
   .route('/')
+  .all(requireAuth)
   .get((req, res, next) => {
     CarsService.getAllCars(req.app.get('db'))
       .then(cars => {
@@ -16,8 +17,8 @@ carsRouter
       .catch(next)
   })
   .post(jsonParser, (req, res, next) => {
-    const { make, model, vin, username, make_vin, date_created } = req.body
-    const newCar = { make, model, vin, username, make_vin }
+    const { make, model, date_created } = req.body
+    const newCar = { make, model }
     
     for (const [key, value] of Object.entries(newCar)) {
       if (value === null) {
@@ -28,6 +29,7 @@ carsRouter
     }
 
     newCar.date_created = date_created;
+    newCar.user_id = req.user.id
 
     CarsService.insertCar(
       req.app.get('db'),
@@ -38,7 +40,7 @@ carsRouter
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${car.id}`))
-          .json(serializeCar(car))
+          .json(CarsService.serializeCar(car))
       })
       .catch(next)
   })
@@ -61,8 +63,8 @@ carsRouter
       .catch(next)
   })
   .patch(jsonParser, (req, res, next) => {
-    const { make, model, vin, username, make_vin, date_created } = req.body
-    const carToUpdate = { make, model, vin, username, make_vin }
+    const { make, model, user_id, vin, vinmake_id, date_created } = req.body
+    const carToUpdate = { make, model, user_id, vin, vinmake_id }
 
     const numberOfValues = Object.values(carToUpdate).filter(Boolean).length
     if (numberOfValues === 0)

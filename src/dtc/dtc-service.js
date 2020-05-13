@@ -8,11 +8,23 @@ const DTCService = {
         "dtc.id",
         "dtc.dtc",
         "dtc.description",
-        "dtc.make",
+        db.raw(
+          `json_strip_nulls(
+            row_to_json(
+              (SELECT tmp FROM (
+                SELECT
+                  vinmake.id,
+                  vinmake.make_vin,
+                  vinmake.short_vin
+              ) tmp)
+            )
+          ) AS "vinmake"`
+        ),
         db.raw(`count(DISTINCT comm) AS number_of_comments`)
-      )
+    )
+      .leftJoin("vinmake", "dtc.vinmake_id", "vinmake.id")
       .leftJoin("comments AS comm", "dtc.id", "comm.dtc_id")
-      .groupBy("dtc.id");
+      .groupBy("dtc.id", "vinmake.id");
   },
 
   getById(db, id) {
@@ -29,7 +41,19 @@ const DTCService = {
         "comm.comment",
         "comm.date_created",
         "comm.date_modified",
-        "comm.make",
+        db.raw(
+          `json_strip_nulls(
+            row_to_json(
+              (SELECT tmp FROM (
+                SELECT
+                  vinmake.id,
+                  vinmake.make_vin,
+                  vinmake.short_vin
+              ) tmp)
+            )
+          ) AS "vinmake"`
+        ),
+        "comm.dtc_id",
         db.raw(
           `json_strip_nulls(
             row_to_json(
@@ -45,30 +69,40 @@ const DTCService = {
         )
       )
       .where("comm.dtc_id", dtc_id)
-      .leftJoin("users", "comm.username", "users.id")
-      .groupBy("comm.id", "users.id");
+      .leftJoin("vinmake", "comm.vinmake_id", "vinmake.id")
+      .leftJoin("users", "comm.user_id", "users.id")
+      .groupBy("comm.id", "vinmake.id", "users.id");
   },
 
   serializeDTC(dtc) {
+    const { vinmake } = dtc;
     return {
       id: dtc.id,
       dtc: dtc.dtc,
       description: dtc.description,
-      make: dtc.make,
+      vinmake_id: {
+        id: vinmake.id,
+        make_vin: vinmake.make_vin,
+        short_vin: vinmake.short_vin,
+      },
       number_of_comments: Number(dtc.number_of_comments) || 0,
     };
   },
 
   serializeDTCComment(comment) {
-    const { user } = comment;
+    const { user, vinmake } = comment;
     return {
       id: comment.id,
       comment: xss(comment.comment),
       date_created: new Date(comment.date_created),
       date_modified: new Date(comment.date_modified) || null,
-      make: comment.make,
+      vinmake_id: {
+        id: vinmake.id,
+        make_vin: vinmake.make_vin,
+        short_vin: vinmake.short_vin,
+      },
       dtc_id: comment.dtc_id,
-      user: {
+      user_id: {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
