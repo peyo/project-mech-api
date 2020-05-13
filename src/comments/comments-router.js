@@ -1,42 +1,40 @@
-const path = require('path')
-const express = require('express')
-const CommentsService = require('./comments-service')
-
-const commentsRouter = express.Router()
-const jsonParser = express.json()
+const path = require("path");
+const express = require("express");
+const CommentsService = require("./comments-service");
+const { requireAuth } = require("../middleware/jwt-auth");
+const commentsRouter = express.Router();
+const jsonParser = express.json();
 
 commentsRouter
-  .route('/')
+  .route("/")
   .get((req, res, next) => {
-    CommentsService.getAllComments(req.app.get('db'))
-      .then(comments => {
-        res.json(comments.map(CommentsService.serializeComment))
+    CommentsService.getAllComments(req.app.get("db"))
+      .then((comments) => {
+        res.json(comments.map(CommentsService.serializeComment));
       })
-      .catch(next)
+      .catch(next);
   })
-  .post(jsonParser, (req, res, next) => {
-    const { comment, date_created, vinmake_id, dtc_id, user_id } = req.body
-    const newComment = { comment, vinmake_id, dtc_id, user_id }
+  .post(requireAuth, jsonParser, (req, res, next) => {
+    const { comment, date_created, vinmake_id, dtc_id } = req.body;
+    const newComment = { comment, vinmake_id, dtc_id };
 
     for (const [key, value] of Object.entries(newComment))
       if (value == null)
         return res.status(400).json({
-          error: { message: `Missing '${key}' in request body` }
-        })
+          error: { message: `Missing '${key}' in request body` },
+        });
 
+    newComment.user_id = req.user.id;
     newComment.date_created = date_created;
 
-    CommentsService.insertComment(
-      req.app.get('db'),
-      newComment
-    )
-      .then(comment => {
+    CommentsService.insertComment(req.app.get("db"), newComment)
+      .then((comment) => {
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${comment.id}`))
-          .json(serializeComment(comment))
+          .json(serializeComment(comment));
       })
-      .catch(next)
-  })
+      .catch(next);
+  });
 
-module.exports = commentsRouter
+module.exports = commentsRouter;

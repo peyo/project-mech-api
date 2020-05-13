@@ -16,7 +16,7 @@ carsRouter
       })
       .catch(next)
   })
-  .post(jsonParser, (req, res, next) => {
+  .post(requireAuth, jsonParser, (req, res, next) => {
     const { make, model, date_created } = req.body
     const newCar = { make, model }
     
