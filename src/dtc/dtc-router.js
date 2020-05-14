@@ -9,9 +9,9 @@ dtcRouter
   .get((req, res, next) => {
     DTCService.getAllDTC(req.app.get('db'))
       .then(dtc => {
-      res.json(dtc.map(DTCService.serializeDTC))
+        res.json(dtc.map(DTCService.serializeDTC))
       })
-    .catch(next)
+      .catch(next)
   })
 
 dtcRouter

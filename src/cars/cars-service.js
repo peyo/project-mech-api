@@ -35,29 +35,23 @@ const CarsService = {
       .first();
   },
 
-  insertCar(db, newCar) {
+  insertUser(db, newCar) {
     return db
       .insert(newCar)
-      .into("cars")
-      .returning("*")
-      .then((rows) => {
-        return rows[0];
-      });
+      .into('cars')
+      .returning('*')
+      .then(([car]) => car)
   },
 
   deleteCar(db, id) {
     return db("cars").where({ id }).delete();
   },
 
-  updateCar(db, id, newCarFields) {
-    return db("cars").where({ id }).update(newCarFields);
-  },
-
   serializeCar(car) {
     const { user } = car
     return {
       id: car.id,
-      make: car.make,
+      make: xss(car.make),
       model: xss(car.model),
       vin: xss(car.vin),
       vinmake_id: car.vinmake_id,

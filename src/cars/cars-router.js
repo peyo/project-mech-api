@@ -16,7 +16,7 @@ carsRouter
       })
       .catch(next)
   })
-  .post(requireAuth, jsonParser, (req, res, next) => {
+  .post(jsonParser, (req, res, next) => {
     const { make, model, date_created } = req.body
     const newCar = { make, model }
     
@@ -56,30 +56,6 @@ carsRouter
     CarsService.deleteDelete(
       req.app.get('db'),
       req.params.car_id
-    )
-      .then(numRowsAffected => {
-      res.status(204).end()
-      })
-      .catch(next)
-  })
-  .patch(jsonParser, (req, res, next) => {
-    const { make, model, user_id, vin, vinmake_id, date_created } = req.body
-    const carToUpdate = { make, model, user_id, vin, vinmake_id }
-
-    const numberOfValues = Object.values(carToUpdate).filter(Boolean).length
-    if (numberOfValues === 0)
-      return res.status(400).json({
-        error: {
-          message: `Request body must container either 'make', 'model', or 'VIN'.`
-        }
-      })
-    
-    carToUpdate.date_created = date_created;
-    
-    CarsService.updateCar(
-      req.app.get('db'),
-      req.params.car_id,
-      carToUpdate
     )
       .then(numRowsAffected => {
       res.status(204).end()
