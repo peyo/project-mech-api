@@ -1,7 +1,8 @@
 const xss = require("xss");
+const moment = require("moment");
 
-const DTCService = {
-  getAllDTC(db) {
+const DtcService = {
+  getAllDtc(db) {
     return db
       .from("dtc")
       .select(
@@ -21,19 +22,17 @@ const DTCService = {
           ) AS "vinmake"`
         ),
         db.raw(`count(DISTINCT comm) AS number_of_comments`)
-    )
+      )
       .leftJoin("vinmake", "dtc.vinmake_id", "vinmake.id")
       .leftJoin("comments AS comm", "dtc.id", "comm.dtc_id")
       .groupBy("dtc.id", "vinmake.id");
   },
 
-  getById(db, id) {
-    return DTCService.getAllDTC(db)
-      .where("dtc.id", id)
-      .first();
+  getDtcById(db, id) {
+    return DTCService.getAllDTC(db).where("dtc.id", id).first();
   },
 
-  getCommentsForDTC(db, dtc_id) {
+  getCommentsForDtc(db, dtc_id) {
     return db
       .from("comments AS comm")
       .select(
@@ -74,7 +73,7 @@ const DTCService = {
       .groupBy("comm.id", "vinmake.id", "users.id");
   },
 
-  serializeDTC(dtc) {
+  serializeDtc(dtc) {
     const { vinmake } = dtc;
     return {
       id: dtc.id,
@@ -89,13 +88,18 @@ const DTCService = {
     };
   },
 
-  serializeDTCComment(comment) {
+  serializeDtcComment(comment) {
     const { user, vinmake } = comment;
     return {
       id: comment.id,
       comment: xss(comment.comment),
-      date_created: new Date(comment.date_created),
-      date_modified: new Date(comment.date_modified) || null,
+      date_created: moment(new Date(comment.date_created))
+        .startOf("day")
+        .fromNow(),
+      date_modified:
+        moment(new Date(comment.date_modified))
+          .startOf("day")
+          .fromNow() || null,
       vinmake_id: {
         id: vinmake.id,
         make_vin: vinmake.make_vin,
@@ -106,10 +110,10 @@ const DTCService = {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
-        date_created: new Date(user.date_created),
+        date_created: new Date(user.date_created)
       },
-    }
+    };
   },
-}
+};
 
-module.exports = DTCService;
+module.exports = DtcService;

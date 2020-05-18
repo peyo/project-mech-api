@@ -1,4 +1,5 @@
-const xss = require('xss')
+const xss = require("xss");
+const moment = require("moment");
 
 const CommentsService = {
   getAllComments(db) {
@@ -47,7 +48,7 @@ const CommentsService = {
             )
           ) AS "user"`
         )
-    )
+      )
       .leftJoin("vinmake", "comm.vinmake_id", "vinmake.id")
       .leftJoin("dtc", "comm.dtc_id", "dtc.id")
       .leftJoin("users", "comm.user_id", "users.id")
@@ -55,9 +56,7 @@ const CommentsService = {
   },
 
   getById(db, id) {
-    return CommentsService.getAllComments(db)
-      .where("comm.id", id)
-      .first();
+    return CommentsService.getAllComments(db).where("comm.id", id).first();
   },
 
   insertComment(db, newComment) {
@@ -82,8 +81,12 @@ const CommentsService = {
     return {
       id: comment.id,
       comment: xss(comment.comment),
-      date_created: new Date(comment.date_created),
-      date_modified: new Date(comment.date_modified) || null,
+      date_created: moment(new Date(comment.date_created))
+        .startOf("day")
+        .fromNow(),
+      date_modified:
+        moment(new Date(comment.date_modified)).startOf("hour").fromNow() ||
+        null,
       vinmake_id: {
         id: vinmake.id,
         make_vin: vinmake.make_vin,
@@ -99,7 +102,9 @@ const CommentsService = {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
-        date_created: new Date(user.date_created),
+        date_created: new Date(user.date_created)
+          .startOf("day")
+          .fromNow(),
       },
     };
   },

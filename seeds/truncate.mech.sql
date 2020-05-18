@@ -2,7 +2,6 @@ TRUNCATE
   comments,
   dtc,
   cars,
-  vin, 
-  make,
+  vinmake, 
   users
   RESTART IDENTITY CASCADE;

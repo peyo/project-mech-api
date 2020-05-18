@@ -1,4 +1,5 @@
-const xss = require('xss')
+const xss = require("xss");
+const moment = require("moment");
 
 const CarsService = {
   getAllCars(db) {
@@ -25,44 +26,40 @@ const CarsService = {
           ) AS "user"`
         )
       )
-      .leftJoin("users", "cars.username", "users.id")
-      .groupBy("cars.id", "users.id")
+      .leftJoin("users", "cars.user_id", "users.id")
+      .groupBy("cars.id", "users.id");
   },
 
-  getById(db, id) {
-    return CarsService.getAllCars(db)
-      .where("cars.id", id)
-      .first();
-  },
-
-  insertUser(db, newCar) {
+  insertUserUniqueCar(db, newCar) {
     return db
       .insert(newCar)
-      .into('cars')
-      .returning('*')
-      .then(([car]) => car)
+      .into("cars")
+      .returning("*")
+      .then(([car]) => car);
   },
 
-  deleteCar(db, id) {
-    return db("cars").where({ id }).delete();
+  getCarByUserId(db, userId) {
+    return CarsService.getAllCars(db)
+      .where("cars.user_id", userId);
+  },
+
+  deleteCarByCarId(db, carId) {
+    return CarsService.getAllCars(db)
+      .where("cars.id", carId)
+      .delete();
   },
 
   serializeCar(car) {
-    const { user } = car
     return {
       id: car.id,
       make: xss(car.make),
       model: xss(car.model),
       vin: xss(car.vin),
       vinmake_id: car.vinmake_id,
-      date_created: new Date(car.date_created),
-      user_id: {
-        id: user.id,
-        username: user.username,
-        nickname: user.nickname,
-        date_created: new Date(user.date_created),
-      },
-    }
+      date_created: moment(new Date(car.date_created))
+        .calendar(),
+      user_id: car.user_id
+    };
   },
 };
 

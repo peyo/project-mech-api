@@ -1,5 +1,5 @@
 const express = require("express");
-const VINMakeService = require("./vinmake-service");
+const VinMakeService = require("./vinmake-service");
 const { requireAuth } = require("../middleware/jwt-auth");
 
 const vinMakeRouter = express.Router();
@@ -8,10 +8,9 @@ vinMakeRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    const knexInstance = req.app.get("db");
-    VINMakeService.getAllVINMake(knexInstance)
+    VinMakeService.getAllVinMake(req.app.get("db"))
       .then((vinmake) => {
-        res.json(vinmake.map(VINMakeService.serializeVINMake));
+        res.json(vinmake.map(VinMakeService.serializeVinMake));
       })
       .catch(next);
   });
@@ -19,9 +18,9 @@ vinMakeRouter
 vinMakeRouter
   .route("/:vinmake_id")
   .all(requireAuth)
-  .all(checkVINMakeExists)
+  .all(checkVinMakeExists)
   .all((req, res, next) => {
-    VINMakeService.getById(req.app.get("db"), req.params.vinmake_id)
+    VinMakeService.getById(req.app.get("db"), req.params.vinmake_id)
       .then((vinmake) => {
         if (!vinmake) {
           return res.status(404).json({
@@ -34,13 +33,13 @@ vinMakeRouter
       .catch(next);
   })
   .get((req, res, next) => {
-    res.json(VINMakeService.serializeVINMake(res.vinmake));
+    res.json(VinMakeService.serializeVinMake(res.vinmake));
 });
 
 
-async function checkVINMakeExists(req, res, next) {
+async function checkVinMakeExists(req, res, next) {
   try {
-    const vinmake = await VINMakeService.getById(
+    const vinmake = await VinMakeService.getById(
       req.app.get('db'),
       req.params.vinmake_id
     )

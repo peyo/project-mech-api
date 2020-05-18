@@ -1,5 +1,5 @@
-const VINMakeService = {
-  getAllVINMake(db) {
+const VinMakeService = {
+  getAllVinMake(db) {
     return db
       .select('*')
       .from('vinmake')
@@ -10,16 +10,15 @@ const VINMakeService = {
       .from('vinmake')
       .select('*')
       .where('id', id)
-      .first()
   },
 
-  serializeVINMake(vinmake) {
+  serializeVinMake(vinmake) {
     return {
       id: vinmake.id,
-      vin: vinmake.make_vin,
-      make: vinmake.short_vin
+      make_vin: vinmake.make_vin,
+      short_vin: vinmake.short_vin
     }
   }
 }
 
-module.exports = VINMakeService
+module.exports = VinMakeService
