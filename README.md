@@ -1,9 +1,12 @@
 # Mech API
-
 This API is the back-end for the Project Mech front-end.
 
 ## Tech
 Nodejs, Knex, Express, Postgres
+
+## npm i
+npm i bcryptjs
+npm install jsonwebtoken
 
 ## Routes
 auth
