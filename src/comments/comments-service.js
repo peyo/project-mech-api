@@ -56,7 +56,9 @@ const CommentsService = {
   },
 
   getById(db, id) {
-    return CommentsService.getAllComments(db).where("comm.id", id).first();
+    return CommentsService.getAllComments(db)
+      .where("comm.id", id)
+      .first();
   },
 
   insertComment(db, newComment) {
@@ -64,16 +66,20 @@ const CommentsService = {
       .insert(newComment)
       .into("comments")
       .returning("*")
-      .then((comment) => comment)
+      .then(([comment]) => comment)
       .then((comment) => CommentsService.getById(db, comment.id));
   },
 
   deleteComment(db, id) {
-    return db("comments").where({ id }).delete();
+    return db("comments")
+      .where({ id })
+      .delete();
   },
 
   updateComment(db, id, newCommentFields) {
-    return db("comments").where({ id }).update(newCommentFields);
+    return db("comments")
+      .where({ id })
+      .update(newCommentFields);
   },
 
   serializeComment(comment) {
@@ -82,11 +88,10 @@ const CommentsService = {
       id: comment.id,
       comment: xss(comment.comment),
       date_created: moment(new Date(comment.date_created))
-        .startOf("day")
-        .fromNow(),
+        .calendar(),
       date_modified:
-        moment(new Date(comment.date_modified)).startOf("hour").fromNow() ||
-        null,
+        moment(new Date(comment.date_modified))
+          .calendar() || null,
       vinmake_id: {
         id: vinmake.id,
         make_vin: vinmake.make_vin,
@@ -102,9 +107,9 @@ const CommentsService = {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
-        date_created: new Date(user.date_created)
-          .startOf("day")
-          .fromNow(),
+        date_created:
+          moment(new Date(user.date_created))
+            .format("MMM do YYY, h:mm:ss a"),
       },
     };
   },

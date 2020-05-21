@@ -57,7 +57,7 @@ const CarsService = {
       vin: xss(car.vin),
       vinmake_id: car.vinmake_id,
       date_created: moment(new Date(car.date_created))
-        .calendar(),
+        .subtract(10, 'days').calendar(),
       user_id: car.user_id
     };
   },

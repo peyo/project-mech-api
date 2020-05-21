@@ -27,12 +27,15 @@ commentsRouter
     newComment.user_id = req.user.id;
     newComment.date_created = date_created;
 
-    CommentsService.insertComment(req.app.get("db"), newComment)
+    CommentsService.insertComment(
+      req.app.get("db"),
+      newComment
+    )
       .then((comment) => {
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${comment.id}`))
-          .json(serializeComment(comment));
+          .json(CommentsService.serializeComment(comment));
       })
       .catch(next);
   });

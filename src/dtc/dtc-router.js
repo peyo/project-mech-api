@@ -4,7 +4,9 @@ const DtcService = require("./dtc-service");
 const dtcRouter = express.Router();
 const jsonParser = express.json();
 
-dtcRouter.route("/").get((req, res, next) => {
+dtcRouter
+  .route("/")
+  .get((req, res, next) => {
   DtcService.getAllDtc(req.app.get("db"))
     .then((dtc) => {
       res.json(dtc.map(DtcService.serializeDtc));
@@ -12,14 +14,34 @@ dtcRouter.route("/").get((req, res, next) => {
     .catch(next);
 });
 
-dtcRouter.route("/:dtc_id").get((req, res) => {
-  res.json(DtcService.serializeDtc(res.dtc));
-});
+dtcRouter
+  .route("/:dtc_id")
+  .get((req, res, next) => {
+    DtcService.getDtcById(
+      req.app.get("db"),
+      req.params.dtc_id)
+      .then((dtc) => {
+        if (!dtc) {
+          return res.status(404).json({
+            error: { message: `DTC doesn't exist` },
+          });
+        }
+        res.dtc = dtc;
+        next();
+      })
+      .then(() => {
+        res.json((DtcService.serializeDtcById(res.dtc)));
+      })
+      .catch(next);
+  })
 
 dtcRouter
   .route("/:dtc_id/comments/")
   .get((req, res, next) => {
-    DtcService.getCommentsForDtc(req.app.get("db"), req.params.dtc_id)
+    DtcService.getCommentsForDtc(
+      req.app.get("db"),
+      req.params.dtc_id
+    )
       .then((comments) => {
         res.json(comments.map(DtcService.serializeDtcComment));
       })

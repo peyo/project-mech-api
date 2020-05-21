@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const xss = require("xss");
+const moment = require("moment");
 
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 
@@ -40,7 +41,8 @@ const UsersService = {
       id: user.id,
       username: xss(user.username),
       nickname: xss(user.nickname),
-      date_created: new Date(user.date_created),
+      date_created: moemnt(new Date(user.date_created))
+        .subtract(10, 'days').calendar(),
     };
   },
 };
