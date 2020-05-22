@@ -1,6 +1,9 @@
 # Mech API
 This API is for the Project Mech front-end.
 
+## Heroku
+https://dashboard.heroku.com/apps/shielded-forest-42936
+
 ## Tech
 Nodejs, Knex, Express, Postgres
 
