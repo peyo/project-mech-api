@@ -8,7 +8,9 @@ vinMakeRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    VinMakeService.getAllVinMake(req.app.get("db"))
+    VinMakeService.getAllVinMake(
+      req.app.get("db")
+    )
       .then((vinmake) => {
         res.json(vinmake.map(VinMakeService.serializeVinMake));
       })
@@ -20,7 +22,10 @@ vinMakeRouter
   .all(requireAuth)
   .all(checkVinMakeExists)
   .all((req, res, next) => {
-    VinMakeService.getById(req.app.get("db"), req.params.vinmake_id)
+    VinMakeService.getById(
+      req.app.get("db"),
+      req.params.vinmake_id
+    )
       .then((vinmake) => {
         if (!vinmake) {
           return res.status(404).json({

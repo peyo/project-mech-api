@@ -9,7 +9,9 @@ commentsRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    CommentsService.getAllComments(req.app.get("db"))
+    CommentsService.getAllComments(
+      req.app.get("db")
+    )
       .then((comments) => {
         res.json(comments.map(CommentsService.serializeComment));
       })
