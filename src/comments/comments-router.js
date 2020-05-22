@@ -7,6 +7,7 @@ const jsonParser = express.json();
 
 commentsRouter
   .route("/")
+  .all(requireAuth)
   .get((req, res, next) => {
     CommentsService.getAllComments(req.app.get("db"))
       .then((comments) => {
