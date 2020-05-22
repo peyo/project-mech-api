@@ -1,12 +1,14 @@
 # Mech API
-This API is the back-end for the Project Mech front-end.
+This API is for the Project Mech front-end.
 
 ## Tech
 Nodejs, Knex, Express, Postgres
 
 ## npm i
+```
 npm i bcryptjs
 npm install jsonwebtoken
+```
 
 ## Routes
 auth
@@ -17,35 +19,36 @@ auth
 
 users
 ```
-/ . . . . . . post
+/ . . . . . . . . . . . .post
 ```
 
 cars
 ```
-/ . . . . . . . . . . . . post
-/:car_id . . . . . . get, delete, patch
+/ . . . . . . . . . . . . get, post
+/:car_id . . . . . . get, delete
 ```
 
 comments
 ```
-/ . . . . . . get
+/ . . . . . . . . . . . . get, post
 ```
 
 dtc
 ```
+/ . . . . . . . . . . . . . . . get
 /:dtc_id . . . . . . . . . . . . get
-/:dtc_id/comments . . . . . . get, delete, patch
+/:dtc_id/comments . . . . . . get
 ```
 
-make
+vinmake
 ```
-/ . . . . . . get
-```
-
-vin
-```
-/ . . . . . . get
+/ . . . . . . . . . . . . get
+/:vinmake_id . . . . . . . get
 ```
 
 ## Front-end
 https://github.com/peyo/project-mech
+
+## Data
+This is a collection of DTC by make and VINs that correspond with world manufacturer identifiers (WMI).
+https://github.com/peyo/dtc-and-vin-data
