@@ -41,8 +41,8 @@ const UsersService = {
       id: user.id,
       username: xss(user.username),
       nickname: xss(user.nickname),
-      date_created: moemnt(new Date(user.date_created))
-        .subtract(10, 'days').calendar(),
+      date_created: moment(new Date(user.date_created))
+        .format()
     };
   },
 };

@@ -109,7 +109,7 @@ const CommentsService = {
         nickname: user.nickname,
         date_created:
           moment(new Date(user.date_created))
-            .format("MMM do YYY, h:mm:ss a"),
+            .format()
       },
     };
   },
