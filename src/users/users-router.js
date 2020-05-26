@@ -16,8 +16,13 @@ usersRouter
         .json({
         error: `Missing '${field}' in request body`,
       });
+    
+    const usernameError = UsersService.validateUsername(username);
+    const passwordError = UsersService.validatePassword(password);
 
-  const passwordError = UsersService.validatePassword(password);
+    if (usernameError) return res
+      .status(400)
+      .json({ error: usernameError });
 
     if (passwordError) return res
       .status(400)
