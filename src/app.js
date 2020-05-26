@@ -29,11 +29,11 @@ app.use('/api/dtc', dtcRouter)
 app.use('/api/vinmake', vinMakeRouter)
 
 app.use(function errorHandler(error, req, res, next) {
+  console.error(error)
   let response
   if (NODE_ENV === "production") {
     response = { error: { message: "server error"} }
   } else {
-    console.error(error)
     response = { message: error.message, error }
   }
   res.status(500).json(response)
