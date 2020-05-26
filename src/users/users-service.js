@@ -22,7 +22,7 @@ const UsersService = {
   },
 
   validateUsername(username) {
-    if (!REGEX_USERNAME(username)) {
+    if (!REGEX_USERNAME.test(username)) {
       return "Username must be a valid email address."
     }
     return null;
