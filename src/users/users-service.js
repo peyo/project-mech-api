@@ -53,7 +53,8 @@ const UsersService = {
       id: user.id,
       username: xss(user.username),
       nickname: xss(user.nickname),
-      date_created: new Date(user.date_created)
+      date_created: moment(new Date(user.date_created))
+        .format()
     };
   },
 };
