@@ -10,14 +10,11 @@ carsRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    CarsService.getCarByUserId(
-      req.app.get("db"),
-      req.user.id,
-    )
+    CarsService.getCarByUserId(req.app.get("db"), req.user.id)
       .then((cars) => {
-        res.json(cars.map(CarsService.serializeCar))
+        res.json(cars.map(CarsService.serializeCar));
       })
-      .catch(next)
+      .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
     const { make, model, vinmake_id, date_created } = req.body;
@@ -25,9 +22,7 @@ carsRouter
 
     for (const [key, value] of Object.entries(newCar)) {
       if (value === null) {
-        return res
-          .status(400)
-          .json({
+        return res.status(400).json({
           error: { message: `Missing '${key}' in request body.` },
         });
       }
@@ -36,10 +31,7 @@ carsRouter
     newCar.date_created = date_created;
     newCar.user_id = req.user.id;
 
-    CarsService.insertUserUniqueCar(
-      req.app.get("db"),
-      newCar
-    )
+    CarsService.insertUserUniqueCar(req.app.get("db"), newCar)
       .then((car) => {
         res
           .status(201)
@@ -53,20 +45,14 @@ carsRouter
   .route("/:car_id")
   .all(requireAuth)
   .get((req, res, next) => {
-    CarsService.getCarByUserId(
-      req.app.get("db"),
-      req.user.id,
-    )
+    CarsService.getCarByUserId(req.app.get("db"), req.user.id)
       .then((cars) => {
-        res.json(cars.map(CarsService.serializeCar))
+        res.json(cars.map(CarsService.serializeCar));
       })
-      .catch(next)
+      .catch(next);
   })
   .delete((req, res, next) => {
-    CarsService.deleteCarByCarId(
-      req.app.get("db"),
-      req.params.car_id
-    )
+    CarsService.deleteCarByCarId(req.app.get("db"), req.params.car_id)
       .then(() => {
         res.status(204).end();
       })

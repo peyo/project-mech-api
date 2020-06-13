@@ -56,9 +56,7 @@ const CommentsService = {
   },
 
   getById(db, id) {
-    return CommentsService.getAllComments(db)
-      .where("comm.id", id)
-      .first();
+    return CommentsService.getAllComments(db).where("comm.id", id).first();
   },
 
   insertComment(db, newComment) {
@@ -71,15 +69,11 @@ const CommentsService = {
   },
 
   deleteComment(db, id) {
-    return db("comments")
-      .where({ id })
-      .delete();
+    return db("comments").where({ id }).delete();
   },
 
   updateComment(db, id, newCommentFields) {
-    return db("comments")
-      .where({ id })
-      .update(newCommentFields);
+    return db("comments").where({ id }).update(newCommentFields);
   },
 
   serializeComment(comment) {
@@ -87,11 +81,8 @@ const CommentsService = {
     return {
       id: comment.id,
       comment: xss(comment.comment),
-      date_created: moment(new Date(comment.date_created))
-        .calendar(),
-      date_modified:
-        moment(new Date(comment.date_modified))
-          .calendar() || null,
+      date_created: moment(new Date(comment.date_created)).calendar(),
+      date_modified: moment(new Date(comment.date_modified)).calendar() || null,
       vinmake_id: {
         id: vinmake.id,
         make_vin: vinmake.make_vin,
@@ -107,9 +98,7 @@ const CommentsService = {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
-        date_created:
-          moment(new Date(user.date_created))
-            .format()
+        date_created: moment(new Date(user.date_created)).format(),
       },
     };
   },

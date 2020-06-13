@@ -23,7 +23,7 @@ const UsersService = {
 
   validateUsername(username) {
     if (!REGEX_USERNAME.test(username)) {
-      return "Username must be a valid email address."
+      return "Username must be a valid email address.";
     }
     return null;
   },
@@ -53,8 +53,7 @@ const UsersService = {
       id: user.id,
       username: xss(user.username),
       nickname: xss(user.nickname),
-      date_created: moment(new Date(user.date_created))
-        .format()
+      date_created: moment(new Date(user.date_created)).format(),
     };
   },
 };

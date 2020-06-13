@@ -29,11 +29,7 @@ const DtcService = {
   },
 
   getDtcById(db, dtc_id) {
-    return db
-      .from("dtc")
-      .select("*")
-      .where("id", dtc_id)
-      .first();
+    return db.from("dtc").select("*").where("id", dtc_id).first();
   },
 
   getCommentsForDtc(db, dtc_id) {
@@ -109,7 +105,7 @@ const DtcService = {
       id: dtc.id,
       dtc: dtc.dtc,
       description: dtc.description,
-      vinmake_id: dtc.vinmake_id
+      vinmake_id: dtc.vinmake_id,
     };
   },
 
@@ -118,11 +114,8 @@ const DtcService = {
     return {
       id: comment.id,
       comment: xss(comment.comment),
-      date_created: moment(new Date(comment.date_created))
-        .calendar(),
-      date_modified:
-        moment(new Date(comment.date_modified))
-          .calendar() || null,
+      date_created: moment(new Date(comment.date_created)).calendar(),
+      date_modified: moment(new Date(comment.date_modified)).calendar() || null,
       vinmake_id: {
         id: vinmake.id,
         make_vin: vinmake.make_vin,
@@ -137,8 +130,7 @@ const DtcService = {
         id: user.id,
         username: user.username,
         nickname: user.nickname,
-        date_created: moment(new Date(user.date_created))
-          .calendar()
+        date_created: moment(new Date(user.date_created)).calendar(),
       },
     };
   },

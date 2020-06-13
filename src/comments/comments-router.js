@@ -9,9 +9,7 @@ commentsRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    CommentsService.getAllComments(
-      req.app.get("db")
-    )
+    CommentsService.getAllComments(req.app.get("db"))
       .then((comments) => {
         res.json(comments.map(CommentsService.serializeComment));
       })
@@ -30,10 +28,7 @@ commentsRouter
     newComment.user_id = req.user.id;
     newComment.date_created = date_created;
 
-    CommentsService.insertComment(
-      req.app.get("db"),
-      newComment
-    )
+    CommentsService.insertComment(req.app.get("db"), newComment)
       .then((comment) => {
         res
           .status(201)

@@ -39,14 +39,11 @@ const CarsService = {
   },
 
   getCarByUserId(db, userId) {
-    return CarsService.getAllCars(db)
-      .where("cars.user_id", userId);
+    return CarsService.getAllCars(db).where("cars.user_id", userId);
   },
 
   deleteCarByCarId(db, carId) {
-    return CarsService.getAllCars(db)
-      .where("cars.id", carId)
-      .delete();
+    return CarsService.getAllCars(db).where("cars.id", carId).delete();
   },
 
   serializeCar(car) {
@@ -57,8 +54,9 @@ const CarsService = {
       vin: xss(car.vin),
       vinmake_id: car.vinmake_id,
       date_created: moment(new Date(car.date_created))
-        .subtract(10, 'days').calendar(),
-      user_id: car.user_id
+        .subtract(10, "days")
+        .calendar(),
+      user_id: car.user_id,
     };
   },
 };
