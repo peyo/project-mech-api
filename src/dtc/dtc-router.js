@@ -1,6 +1,5 @@
 const express = require("express");
 const DtcService = require("./dtc-service");
-const { requireAuth } = require("../middleware/jwt-auth");
 
 const dtcRouter = express.Router();
 const jsonParser = express.json();
