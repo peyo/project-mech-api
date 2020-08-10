@@ -43,7 +43,7 @@ commentsRouter
   .all(checkCommentExists)
   .all((req, res, next) => {
     const knexInstance = req.app.get("db");
-    CommentsService.getById(knexInstance, req, params.id)
+    CommentsService.getById(knexInstance, req.params.id)
       .then((comment) => {
         if (!comment) {
           return res.status(400).json({
