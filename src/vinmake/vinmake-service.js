@@ -1,12 +1,15 @@
 const VinMakeService = {
   getAllVinMake(db) {
-    return db.select("*").from("vinmake");
+    return db
+      .select("*")
+      .from("vinmake");
   },
-
   getById(db, id) {
-    return db.from("vinmake").select("*").where("id", id);
+    return db
+      .from("vinmake")
+      .select("*")
+      .where("id", id);
   },
-
   serializeVinMake(vinmake) {
     return {
       id: vinmake.id,

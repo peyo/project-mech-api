@@ -12,24 +12,10 @@ const CarsService = {
         "cars.vin",
         "cars.vinmake_id",
         "cars.date_created",
-        db.raw(
-          `json_strip_nulls(
-            row_to_json(
-              (SELECT tmp FROM (
-                SELECT
-                  users.id,
-                  users.username,
-                  users.nickname,
-                  users.date_created
-              ) tmp)
-            )
-          ) AS "user"`
-        )
+        "cars.user_id"
       )
       .leftJoin("users", "cars.user_id", "users.id")
-      .groupBy("cars.id", "users.id");
   },
-
   insertUserUniqueCar(db, newCar) {
     return db
       .insert(newCar)
@@ -37,15 +23,17 @@ const CarsService = {
       .returning("*")
       .then(([car]) => car);
   },
-
   getCarByUserId(db, userId) {
-    return CarsService.getAllCars(db).where("cars.user_id", userId);
+    return CarsService
+      .getAllCars(db)
+      .where("cars.user_id", userId);
   },
-
   deleteCarByCarId(db, carId) {
-    return CarsService.getAllCars(db).where("cars.id", carId).delete();
+    return CarsService
+      .getAllCars(db)
+      .where("cars.id", carId)
+      .delete();
   },
-
   serializeCar(car) {
     return {
       id: car.id,

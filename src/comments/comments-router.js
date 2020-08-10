@@ -1,15 +1,16 @@
-const path = require("path");
 const express = require("express");
+const commentsRouter = express.Router();
 const CommentsService = require("./comments-service");
 const { requireAuth } = require("../middleware/jwt-auth");
-const commentsRouter = express.Router();
+const path = require("path");
 const jsonParser = express.json();
 
 commentsRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    CommentsService.getAllComments(req.app.get("db"))
+    const knexInstance = req.app.get("db");
+    CommentsService.getAllComments(knexInstance)
       .then((comments) => {
         res.json(comments.map(CommentsService.serializeComment));
       })
@@ -18,17 +19,21 @@ commentsRouter
   .post(requireAuth, jsonParser, (req, res, next) => {
     const { comment, date_created, vinmake_id, dtc_id } = req.body;
     const newComment = { comment, vinmake_id, dtc_id };
+    const knexInstance = req.app.get("db");
 
     for (const [key, value] of Object.entries(newComment))
-      if (value == null)
+      if (value == null) {
         return res.status(400).json({
-          error: { message: `Missing '${key}' in request body` },
+          error: {
+            message: `Missing "${key}" in request body.`,
+          },
         });
+      }
 
     newComment.user_id = req.user.id;
     newComment.date_created = date_created;
 
-    CommentsService.insertComment(req.app.get("db"), newComment)
+    CommentsService.insertComment(knexInstance, newComment)
       .then((comment) => {
         res
           .status(201)
@@ -57,6 +62,9 @@ commentsRouter
       })
       .catch(next);
   })
+  .get((req, res, next) => {
+    res.json(CommentsService.serializeComment(res.comment));
+  })
   .delete(requireAuth, async (req, res, next) => {
     const knexInstance = req.app.get("db");
     const comment = await CommentsService.getById(knexInstance, req.params.id);
@@ -69,10 +77,11 @@ commentsRouter
       });
     }
 
-    if (comment.users_id !== req.users.id) {
+    if (comment.user_id !== req.user.id) {
+      console.log(comment.user_id);
       return res.status(401).json({
         error: {
-          message: `You can only delete your own comments.`,
+          message: `You can only delete your own comments!`,
         },
       });
     }
@@ -110,7 +119,7 @@ commentsRouter
       });
     }
 
-    if (checkComment.users_id !== req.users.id) {
+    if (checkComment.user_id !== req.user.id) {
       return res.status(401).json({
         error: {
           message: `You can only edit your own comments.`,

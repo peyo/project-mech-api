@@ -2,11 +2,11 @@ BEGIN;
 
 INSERT INTO users (username, nickname, password)
 VALUES
-  ('hayoungsim@gmail.com', 'mike', '@ABCabc123'), 
-  ('justinirhee@gmail.com', 'justin', '@ABCabc123'), 
-  ('cfcardillo23@gmail.com', 'chris', '@ABCabc123'), 
-  ('derekgeryol@gmail.com', 'derek', '@ABCabc123'), 
-  ('peteryyoon@gmail.com', 'peter', '@ABCabc123');
+  ('hayoungsim@gmail.com', 'mike', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS'), 
+  ('justinirhee@gmail.com', 'justin', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS'), 
+  ('cfcardillo23@gmail.com', 'chris', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS'), 
+  ('derekgeryol@gmail.com', 'derek', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS'), 
+  ('peteryyoon@gmail.com', 'peter', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS');
 
 INSERT INTO vinmake (short_vin, make_vin)
 VALUES
