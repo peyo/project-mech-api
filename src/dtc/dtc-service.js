@@ -29,7 +29,11 @@ const DtcService = {
   },
 
   getDtcById(db, dtc_id) {
-    return db.from("dtc").select("*").where("id", dtc_id).first();
+    return db
+      .from("dtc")
+      .select("*")
+      .where("id", dtc_id)
+      .first();
   },
 
   getCommentsForDtc(db, dtc_id) {

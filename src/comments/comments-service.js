@@ -69,7 +69,9 @@ const CommentsService = {
   },
 
   deleteComment(db, id) {
-    return db("comments").where({ id }).delete();
+    return db("comments")
+      .where({ id })
+      .delete();
   },
 
   updateComment(db, id, newCommentFields) {

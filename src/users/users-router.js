@@ -14,7 +14,9 @@ usersRouter
       return res
         .status(400)
         .json({
-        error: `Missing '${field}' in request body.`,
+          error: {
+            message: `Missing '${field}' in request body.`,
+          },
       });
     
     const usernameError = UsersService.validateUsername(username);
@@ -22,11 +24,19 @@ usersRouter
 
     if (usernameError) return res
       .status(400)
-      .json({ error: usernameError });
+      .json({
+        error: {
+          message: usernameError,
+        },
+      });
 
     if (passwordError) return res
       .status(400)
-      .json({ error: passwordError });
+      .json({
+        error: {
+          message: passwordError,
+        },
+      });
 
     UsersService.hasUserWithUsername(
       req.app.get("db"),
@@ -36,7 +46,11 @@ usersRouter
       if (hasUserWithUsername)
         return res
           .status(400)
-          .json({ error: `Username exists.` });
+          .json({
+            error: {
+              message: `Username exists.`
+            },
+          });
 
       return UsersService.hashPassword(password)
         .then((hashedPassword) => {

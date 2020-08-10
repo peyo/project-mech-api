@@ -24,7 +24,9 @@ vinMakeRouter
       .then((vinmake) => {
         if (!vinmake) {
           return res.status(404).json({
-            error: { message: `VIN and Make don't exist.` },
+            error: {
+              message: `VIN and Make don't exist.`
+            },
           });
         }
         res.vinmake = vinmake;
@@ -45,7 +47,9 @@ async function checkVinMakeExists(req, res, next) {
 
     if (!vinmake)
       return res.status(404).json({
-        error: `VIN and Make don't exist.`,
+        error: {
+          message: `VIN and Make don't exist.`,
+        },
       });
 
     res.vinmake = vinmake;

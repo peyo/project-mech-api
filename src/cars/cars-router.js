@@ -43,6 +43,7 @@ carsRouter
 
 carsRouter
   .route("/:car_id")
+  .all(checkCarExists)
   .all(requireAuth)
   .get((req, res, next) => {
     CarsService.getCarByUserId(req.app.get("db"), req.user.id)
@@ -65,7 +66,9 @@ async function checkCarExists(req, res, next) {
 
     if (!car)
       return res.status(404).json({
-        error: `Car doesn't exist.`,
+        error: {
+          message: `Car doesn't exist.`,
+        },
       });
 
     res.car = car;
