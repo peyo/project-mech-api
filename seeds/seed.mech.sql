@@ -7,6 +7,7 @@ VALUES
   ('cfcardillo23@gmail.com', 'chris', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS'), 
   ('derekgeryol@gmail.com', 'derek', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS'), 
   ('peteryyoon@gmail.com', 'peter', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS');
+  ('testaccount@gmail.com', 'testaccount', '$2a$12$p3LbzQXwJuHH2UctCB7fl.Uqva20izJCKyuqq8YZzm88mT2kHa2cS');
 
 INSERT INTO vinmake (short_vin, make_vin)
 VALUES

@@ -17,7 +17,7 @@ dtcRouter
   .all(checkDtcExists)
   .get((req, res, next) => {
     const knexInstance = req.app.get("db");
-    DtcService.getDtcById(knexInstance, req.params.dtc_id)
+    DtcService.getById(knexInstance, req.params.dtc_id)
       .then((dtc) => {
         if (!dtc) {
           return res.status(404).json({
