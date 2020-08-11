@@ -66,7 +66,6 @@ const DtcService = {
   },
 
   serializeDtcComment(comment) {
-    const { user, vinmake, dtc } = comment;
     return {
       id: comment.id,
       comment: xss(comment.comment),
