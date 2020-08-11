@@ -72,22 +72,9 @@ const DtcService = {
       comment: xss(comment.comment),
       date_created: moment(new Date(comment.date_created)).calendar(),
       date_modified: moment(new Date(comment.date_modified)).calendar() || null,
-      vinmake_id: {
-        id: vinmake.id,
-        make_vin: vinmake.make_vin,
-        short_vin: vinmake.short_vin,
-      },
-      dtc_id: {
-        id: dtc.id,
-        dtc: dtc.dtc,
-        description: dtc.description,
-      },
-      user_id: {
-        id: user.id,
-        username: user.username,
-        nickname: user.nickname,
-        date_created: moment(new Date(user.date_created)).calendar(),
-      },
+      vinmake_id: comment.vinmake_id,
+      dtc_id: comment.dtc_id,
+      user_id: comment.user_id,
     };
   },
 };
