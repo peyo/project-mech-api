@@ -47,16 +47,11 @@ const DtcService = {
   },
 
   serializeDtc(dtc) {
-    const { vinmake } = dtc;
     return {
       id: dtc.id,
       dtc: dtc.dtc,
       description: dtc.description,
-      vinmake_id: {
-        id: vinmake.id,
-        make_vin: vinmake.make_vin,
-        short_vin: vinmake.short_vin,
-      },
+      vinmake_id: dtc.vinmake_id,
       number_of_comments: Number(dtc.number_of_comments) || 0,
     };
   },
