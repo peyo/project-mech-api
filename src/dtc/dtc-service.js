@@ -9,18 +9,7 @@ const DtcService = {
         "dtc.id",
         "dtc.dtc",
         "dtc.description",
-        db.raw(
-          `json_strip_nulls(
-            row_to_json(
-              (SELECT tmp FROM (
-                SELECT
-                  vinmake.id,
-                  vinmake.make_vin,
-                  vinmake.short_vin
-              ) tmp)
-            )
-          ) AS "vinmake"`
-        ),
+        "dtc.vinmake_id",
         db.raw(`count(DISTINCT comments) AS number_of_comments`)
       )
       .leftJoin("vinmake", "dtc.vinmake_id", "vinmake.id")
