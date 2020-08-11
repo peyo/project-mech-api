@@ -9,14 +9,24 @@ const DtcService = {
         "dtc.id",
         "dtc.dtc",
         "dtc.description",
-        "dtc.vinmake_id",
+        db.raw(
+          `json_strip_nulls(
+            row_to_json(
+              (SELECT tmp FROM (
+                SELECT
+                  vinmake.id,
+                  vinmake.make_vin,
+                  vinmake.short_vin
+              ) tmp)
+            )
+          ) AS "vinmake"`
+        ),
         db.raw(`count(DISTINCT comments) AS number_of_comments`)
       )
       .leftJoin("vinmake", "dtc.vinmake_id", "vinmake.id")
       .leftJoin("comments", "dtc.id", "comments.dtc_id")
       .groupBy("dtc.id", "vinmake.id");
   },
-
   getById(db, dtc_id) {
     return db
       .from("dtc")
@@ -26,7 +36,6 @@ const DtcService = {
         return rows[0];
       });
   },
-
   getCommentsForDtc(db, dtc_id) {
     return db
       .from("comments")
@@ -35,9 +44,43 @@ const DtcService = {
         "comments.comment",
         "comments.date_created",
         "comments.date_modified",
-        "comments.vinmake_id",
-        "comments.dtc_id",
-        "comments.user_id",
+        db.raw(
+          `json_strip_nulls(
+            row_to_json(
+              (SELECT tmp FROM (
+                SELECT
+                  vinmake.id,
+                  vinmake.make_vin,
+                  vinmake.short_vin
+              ) tmp)
+            )
+          ) AS "vinmake"`
+        ),
+        db.raw(
+          `json_strip_nulls(
+            row_to_json(
+              (SELECT tmp FROM (
+                SELECT
+                  dtc.id,
+                  dtc.dtc,
+                  dtc.description
+              ) tmp)
+            )
+          ) AS "dtc"`
+        ),
+        db.raw(
+          `json_strip_nulls(
+            row_to_json(
+              (SELECT tmp FROM (
+                SELECT
+                  users.id,
+                  users.username,
+                  users.nickname,
+                  users.date_created
+              ) tmp)
+            )
+          ) AS "user"`
+        )
       )
       .where("comments.dtc_id", dtc_id)
       .leftJoin("vinmake", "comments.vinmake_id", "vinmake.id")
@@ -45,7 +88,6 @@ const DtcService = {
       .leftJoin("users", "comments.user_id", "users.id")
       .groupBy("comments.id", "vinmake.id", "dtc.id", "users.id");
   },
-
   serializeDtc(dtc) {
     return {
       id: dtc.id,
@@ -55,7 +97,6 @@ const DtcService = {
       number_of_comments: Number(dtc.number_of_comments) || 0,
     };
   },
-
   serializeDtcById(dtc) {
     return {
       id: dtc.id,
@@ -64,7 +105,6 @@ const DtcService = {
       vinmake_id: dtc.vinmake_id,
     };
   },
-
   serializeDtcComment(comment) {
     return {
       id: comment.id,

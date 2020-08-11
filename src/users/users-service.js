@@ -12,7 +12,6 @@ const UsersService = {
       .first()
       .then((user) => !!user);
   },
-
   insertUser(db, newUser) {
     return db
       .insert(newUser)
@@ -20,14 +19,12 @@ const UsersService = {
       .returning("*")
       .then(([user]) => user);
   },
-
   validateUsername(username) {
     if (!REGEX_USERNAME.test(username)) {
       return "Username must be a valid email address.";
     }
     return null;
   },
-
   validatePassword(password) {
     if (password.length < 8) {
       return "Password be longer than 8 and less than 72 characters.";
@@ -43,11 +40,9 @@ const UsersService = {
     }
     return null;
   },
-
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
-
   serializeUser(user) {
     return {
       id: user.id,
