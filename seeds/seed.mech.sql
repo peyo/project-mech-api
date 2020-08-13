@@ -54,4 +54,13 @@ VALUES
   ('The MAF (mass air flow) sensor is a sensor mounted in a vehicle''s engine air intake tract downstream from the air filter, and is used to measure the volume and density of air being drawn into the engine. The MAF sensor itself only measures a portion of the air entering and that value is used to calculate the total volume and density of air being ingested.', '2', '13', '2'),
   ('The powertrain control module (PCM) uses that reading along with other sensor parameters to ensure proper fuel delivery at any given time for optimum power and fuel efficiency. This P0100 diagnostic trouble code (DTC) means that there is a detected problem with the Mass Air Flow (MAF) sensor or circuit. The PCM detects that the actual MAF sensor frequency signal is not performing within the normal expected range of the calculated MAF value', '3', '13', '3');
 
+INSERT INTO karma (karma, comment_id, user_id)
+VALUES
+  ('1', '1', '1',),
+  ('1', '1', '2',),
+  ('1', '1', '3',),
+  ('0', '2', '1',),
+  ('-1', '2', '2',),
+  ('-1', '2', '3',);
+
 COMMIT;

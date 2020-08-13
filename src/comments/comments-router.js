@@ -78,7 +78,6 @@ commentsRouter
     }
 
     if (comment.user_id !== req.user.id) {
-      console.log(comment.user_id);
       return res.status(401).json({
         error: {
           message: `You can only delete your own comments!`,
