@@ -1,23 +1,27 @@
 const bcrypt = require("bcryptjs");
 const xss = require("xss");
 const moment = require("moment");
-
+const User = require('./models');
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 const REGEX_USERNAME = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const UsersService = {
-  hasUserWithUsername(db, username) {
-    return db("users")
-      .where({ username })
-      .first()
-      .then((user) => !!user);
+  hasUserWithUsername(username) {
+    return !!User.findOne({
+      username
+    })
+    // return db("users")
+    //   .where({ username })
+    //   .first()
+    //   .then((user) => !!user);
   },
-  insertUser(db, newUser) {
-    return db
-      .insert(newUser)
-      .into("users")
-      .returning("*")
-      .then(([user]) => user);
+  insertUser(newUser) {
+    return User.create(newUser);
+    // return db
+    //   .insert(newUser)
+    //   .into("users")
+    //   .returning("*")
+    //   .then(([user]) => user);
   },
   validateUsername(username) {
     if (!REGEX_USERNAME.test(username)) {

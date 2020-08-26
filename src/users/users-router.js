@@ -39,7 +39,6 @@ usersRouter
       });
 
     UsersService.hasUserWithUsername(
-      req.app.get("db"),
       username
     )
     .then((hasUserWithUsername) => {
@@ -62,7 +61,6 @@ usersRouter
         };
 
           return UsersService.insertUser(
-            req.app.get("db"),
             newUser)
             .then((user) => {
             res

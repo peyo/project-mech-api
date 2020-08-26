@@ -4,8 +4,7 @@ const DtcService = require("./dtc-service");
 const dtcRouter = express.Router();
 
 dtcRouter.route("/").get((req, res, next) => {
-  const knexInstance = req.app.get("db");
-  DtcService.getAllDtc(knexInstance)
+  DtcService.getAllDtc()
     .then((dtc) => {
       res.json(dtc.map(DtcService.serializeDtc));
     })
@@ -16,8 +15,8 @@ dtcRouter
   .route("/:dtc_id")
   .all(checkDtcExists)
   .get((req, res, next) => {
-    const knexInstance = req.app.get("db");
-    DtcService.getById(knexInstance, req.params.dtc_id)
+
+    DtcService.getById(req.params.dtc_id)
       .then((dtc) => {
         if (!dtc) {
           return res.status(404).json({
@@ -36,8 +35,7 @@ dtcRouter
   });
 
 dtcRouter.route("/:dtc_id/comments/").get((req, res, next) => {
-  const knexInstance = req.app.get("db");
-  DtcService.getCommentsForDtc(knexInstance, req.params.dtc_id)
+  DtcService.getCommentsForDtc(req.params.dtc_id)
     .then((comments) => {
       res.json(comments.map(DtcService.serializeDtcComment));
     })
@@ -46,8 +44,8 @@ dtcRouter.route("/:dtc_id/comments/").get((req, res, next) => {
 
 async function checkDtcExists(req, res, next) {
   try {
-    const knexInstance = req.app.get("db");
-    const dtc = await DtcService.getById(knexInstance, req.params.dtc_id);
+
+    const dtc = await DtcService.getById(req.params.dtc_id);
 
     if (!dtc)
       return res.status(404).json({

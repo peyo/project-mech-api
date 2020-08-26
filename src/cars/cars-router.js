@@ -10,7 +10,7 @@ carsRouter
   .route("/")
   .all(requireAuth)
   .get((req, res, next) => {
-    CarsService.getCarByUserId(req.app.get("db"), req.user.id)
+    CarsService.getCarByUserId(req.user.id)
       .then((cars) => {
         res.json(cars.map(CarsService.serializeCar));
       })
@@ -31,7 +31,7 @@ carsRouter
     newCar.date_created = date_created;
     newCar.user_id = req.user.id;
 
-    CarsService.insertUserUniqueCar(req.app.get("db"), newCar)
+    CarsService.insertUserUniqueCar(newCar)
       .then((car) => {
         res
           .status(201)
@@ -46,14 +46,14 @@ carsRouter
   .all(checkCarExists)
   .all(requireAuth)
   .get((req, res, next) => {
-    CarsService.getCarByUserId(req.app.get("db"), req.user.id)
+    CarsService.getCarByUserId(req.user.id)
       .then((cars) => {
         res.json(cars.map(CarsService.serializeCar));
       })
       .catch(next);
   })
   .delete((req, res, next) => {
-    CarsService.deleteCarByCarId(req.app.get("db"), req.params.car_id)
+    CarsService.deleteCarByCarId(req.params.car_id)
       .then(() => {
         res.status(204).end();
       })
@@ -62,7 +62,7 @@ carsRouter
 
 async function checkCarExists(req, res, next) {
   try {
-    const car = await CarsService.getById(req.app.get("db"), req.params.car_id);
+    const car = await CarsService.getById(req.params.car_id);
 
     if (!car)
       return res.status(404).json({

@@ -1,6 +1,6 @@
 const xss = require("xss");
 const moment = require("moment");
-
+const Comments = require('./models')
 const CommentsService = {
   getAllComments(db) {
     return db

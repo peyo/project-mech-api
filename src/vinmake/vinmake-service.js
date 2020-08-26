@@ -1,14 +1,20 @@
+const VinMake = require('./models');
+
 const VinMakeService = {
-  getAllVinMake(db) {
-    return db
-      .select("*")
-      .from("vinmake");
+  getAllVinMake() {
+    return VinMake.find();
+    // return db
+    //   .select("*")
+    //   .from("vinmake");
   },
-  getById(db, id) {
-    return db
-      .from("vinmake")
-      .select("*")
-      .where("id", id);
+  getById(_id) {
+    return VinMake.findOne({
+      _id
+    })
+    // return db
+    //   .from("vinmake")
+    //   .select("*")
+    //   .where("id", id);
   },
   serializeVinMake(vinmake) {
     return {
