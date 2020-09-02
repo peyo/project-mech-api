@@ -33,7 +33,7 @@ commentsRouter
     newComment.user_id = req.user.id;
     newComment.date_created = date_created;
 
-    CommentsService.insertComment(knexInstance, newComment)
+    CommentsService.postComment(knexInstance, newComment)
       .then((comment) => {
         res
           .status(201)

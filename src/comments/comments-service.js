@@ -27,7 +27,7 @@ const CommentsService = {
         return rows[0];
       });
   },
-  insertComment(db, newComment) {
+  postComment(db, newComment) {
     return db
       .insert(newComment)
       .into("comments")
