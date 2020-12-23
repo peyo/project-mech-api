@@ -1,5 +1,5 @@
 # Mech API
-This API is for the Project Mech front-end.
+This API (aka server, back-end) is for the Project Mech front-end.
 
 ## Heroku
 https://dashboard.heroku.com/apps/project-mech-api
