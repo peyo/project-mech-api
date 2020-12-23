@@ -16,37 +16,38 @@ npm install jsonwebtoken
 ## Routes
 auth
 ```
-/login . . . . . . post
-/refresh . . . . . . post
+/login                    post
+/refresh                  post
 ```
 
 users
 ```
-/ . . . . . . . . . . . .post
+/                         post
 ```
 
 cars
 ```
-/ . . . . . . . . . . . . get, post
-/:car_id . . . . . . get, delete
+/                         get, post
+/:car_id                  get, delete
 ```
 
 comments
 ```
-/ . . . . . . . . . . . . get, post
+/                         get, post
+/:comment_id              delete, patch
 ```
 
 dtc
 ```
-/ . . . . . . . . . . . . . . . get
-/:dtc_id . . . . . . . . . . . . get
-/:dtc_id/comments . . . . . . get
+/                         get
+/:dtc_id                  get
+/:dtc_id/comments         get
 ```
 
 vinmake
 ```
-/ . . . . . . . . . . . . get
-/:vinmake_id . . . . . . . get
+/                         get
+/:vinmake_id              get
 ```
 
 ## Front-end
