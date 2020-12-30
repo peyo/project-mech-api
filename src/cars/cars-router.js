@@ -19,6 +19,7 @@ carsRouter
   .post(jsonParser, (req, res, next) => {
     const { make, model, vinmake_id, date_created } = req.body;
     const newCar = { make, model, vinmake_id };
+    const knexInstance = req.app.get("db");
 
     for (const [key, value] of Object.entries(newCar)) {
       if (value === null) {
@@ -31,7 +32,7 @@ carsRouter
     newCar.date_created = date_created;
     newCar.user_id = req.user.id;
 
-    CarsService.insertUserUniqueCar(req.app.get("db"), newCar)
+    CarsService.insertUserUniqueCar(knexInstance, newCar)
       .then((car) => {
         res
           .status(201)

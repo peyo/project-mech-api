@@ -23,14 +23,14 @@ const CarsService = {
       .returning("*")
       .then(([car]) => car);
   },
-  getCarByUserId(db, userId) {
-    return CarsService.getAllCars(db).where("cars.user_id", userId);
+  getCarByUserId(db, user_id) {
+    return CarsService.getAllCars(db).where("cars.user_id", user_id);
   },
-  getCarByCarId(db, carId) {
-    return CarsService.getAllCars(db).where("cars.id", carId);
+  getCarByCarId(db, car_id) {
+    return CarsService.getAllCars(db).where("cars.id", car_id);
   },
-  deleteCarByCarId(db, carId) {
-    return CarsService.getAllCars(db).where("cars.id", carId).delete();
+  deleteCarByCarId(db, car_id) {
+    return CarsService.getAllCars(db).where("cars.id", car_id).delete();
   },
   serializeCar(car) {
     return {
