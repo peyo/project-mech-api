@@ -14,7 +14,7 @@ const CarsService = {
         "cars.date_created",
         "cars.user_id"
       )
-      .leftJoin("users", "cars.user_id", "users.id")
+      .leftJoin("users", "cars.user_id", "users.id");
   },
   insertUserUniqueCar(db, newCar) {
     return db
@@ -24,15 +24,13 @@ const CarsService = {
       .then(([car]) => car);
   },
   getCarByUserId(db, userId) {
-    return CarsService
-      .getAllCars(db)
-      .where("cars.user_id", userId);
+    return CarsService.getAllCars(db).where("cars.user_id", userId);
+  },
+  getCarByCarId(db, carId) {
+    return CarsService.getAllCars(db).where("cars.id", carId);
   },
   deleteCarByCarId(db, carId) {
-    return CarsService
-      .getAllCars(db)
-      .where("cars.id", carId)
-      .delete();
+    return CarsService.getAllCars(db).where("cars.id", carId).delete();
   },
   serializeCar(car) {
     return {
@@ -41,8 +39,7 @@ const CarsService = {
       model: xss(car.model),
       vin: xss(car.vin),
       vinmake_id: car.vinmake_id,
-      date_created: moment(new Date(car.date_created))
-        .calendar(),
+      date_created: moment(new Date(car.date_created)).calendar(),
       user_id: car.user_id,
     };
   },

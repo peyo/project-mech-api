@@ -62,7 +62,7 @@ carsRouter
 
 async function checkCarExists(req, res, next) {
   try {
-    const car = await CarsService.getById(req.app.get("db"), req.params.car_id);
+    const car = await CarsService.getCarByCarId(req.app.get("db"), req.params.car_id);
 
     if (!car)
       return res.status(404).json({
