@@ -44,15 +44,15 @@ const CommentsService = {
       .where({ id })
       .update(newComment);
   },
-  serializeComment(comment) {
+  serializeComment(comment, nickname) {
     return {
       id: comment.id,
       comment: xss(comment.comment),
       date_created: moment(new Date(comment.date_created)).calendar(),
-      date_modified: moment(new Date(comment.date_modified)).calendar() || null,
       vinmake_id: comment.vinmake_id,
       dtc_id: comment.dtc_id,
       user_id: comment.user_id,
+      nickname: nickname
     };
   },
 };

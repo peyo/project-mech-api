@@ -18,7 +18,8 @@ commentsRouter
   })
   .post(requireAuth, jsonParser, (req, res, next) => {
     const { comment, vinmake_id, dtc_id } = req.body;
-    const user_id = req.user.id
+    const user_id = req.user.id;
+    const nickname = req.user.nickname;
     const newComment = { comment, vinmake_id, dtc_id, user_id };
     const knexInstance = req.app.get("db");
 
@@ -36,7 +37,7 @@ commentsRouter
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${comment.id}`))
-          .json(CommentsService.serializeComment(comment));
+          .json(CommentsService.serializeComment(comment, nickname));
       })
       .catch(next);
   });
