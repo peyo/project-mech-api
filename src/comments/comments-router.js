@@ -31,9 +31,6 @@ commentsRouter
         });
       }
 
-    //newComment.date_created = date_created;
-    //newComment.user_id = req.user.id;
-
     CommentsService.postComment(knexInstance, newComment)
       .then((comment) => {
         res

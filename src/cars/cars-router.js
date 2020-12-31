@@ -17,8 +17,9 @@ carsRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { make, model, vinmake_id, date_created } = req.body;
-    const newCar = { make, model, vinmake_id };
+    const { make, model, vinmake_id } = req.body;
+    const user_id = req.user.id;
+    const newCar = { make, model, vinmake_id, user_id };
     const knexInstance = req.app.get("db");
 
     for (const [key, value] of Object.entries(newCar)) {
@@ -28,9 +29,6 @@ carsRouter
         });
       }
     }
-
-    newCar.date_created = date_created;
-    newCar.user_id = req.user.id;
 
     CarsService.insertUserUniqueCar(knexInstance, newCar)
       .then((car) => {
