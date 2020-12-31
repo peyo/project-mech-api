@@ -52,7 +52,9 @@ const CommentsService = {
       vinmake_id: comment.vinmake_id,
       dtc_id: comment.dtc_id,
       user_id: comment.user_id,
-      nickname: nickname
+      user_id: {
+        nickname: nickname
+      }
     };
   },
 };
