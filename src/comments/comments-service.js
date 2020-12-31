@@ -16,7 +16,7 @@ const CommentsService = {
       )
       .leftJoin("vinmake", "comments.vinmake_id", "vinmake.id")
       .leftJoin("dtc", "comments.dtc_id", "dtc.id")
-      .leftJoin("users", "comments.user_id", "users.id")
+      .leftJoin("users", "comments.user_id", "users.id");
   },
   getById(db, id) {
     return db
@@ -32,17 +32,13 @@ const CommentsService = {
       .insert(newComment)
       .into("comments")
       .returning("*")
-      .then(([comment]) => comment)
+      .then(([comment]) => comment);
   },
   deleteComment(db, id) {
-    return db("comments")
-      .where({ id })
-      .delete();
+    return db("comments").where({ id }).delete();
   },
   updateComment(db, id, newComment) {
-    return db("comments")
-      .where({ id })
-      .update(newComment);
+    return db("comments").where({ id }).update(newComment);
   },
   serializeComment(comment, nickname) {
     return {
@@ -51,10 +47,10 @@ const CommentsService = {
       date_created: moment(new Date(comment.date_created)).calendar(),
       vinmake_id: comment.vinmake_id,
       dtc_id: comment.dtc_id,
-      //user_id: comment.user_id,
       user_id: {
-        nickname: nickname
-      }
+        id: comment.user_id,
+        nickname: nickname,
+      },
     };
   },
 };
