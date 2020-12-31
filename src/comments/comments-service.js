@@ -51,7 +51,7 @@ const CommentsService = {
       date_created: moment(new Date(comment.date_created)).calendar(),
       vinmake_id: comment.vinmake_id,
       dtc_id: comment.dtc_id,
-      user_id: comment.user_id,
+      //user_id: comment.user_id,
       user_id: {
         nickname: nickname
       }
