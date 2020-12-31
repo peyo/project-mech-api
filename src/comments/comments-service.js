@@ -33,9 +33,6 @@ const CommentsService = {
       .into("comments")
       .returning("*")
       .then(([comment]) => comment)
-      .then((rows) => {
-        return rows[0];
-      });
   },
   deleteComment(db, id) {
     return db("comments")
