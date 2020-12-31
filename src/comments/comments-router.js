@@ -17,8 +17,9 @@ commentsRouter
       .catch(next);
   })
   .post(requireAuth, jsonParser, (req, res, next) => {
-    const { comment, date_created, vinmake_id, dtc_id } = req.body;
-    const newComment = { comment, vinmake_id, dtc_id };
+    const { comment, vinmake_id, dtc_id } = req.body;
+    const user_id = req.user.id
+    const newComment = { comment, vinmake_id, dtc_id, user_id };
     const knexInstance = req.app.get("db");
 
     for (const [key, value] of Object.entries(newComment))
@@ -30,8 +31,8 @@ commentsRouter
         });
       }
 
-    newComment.date_created = date_created;
-    newComment.user_id = req.user.id;
+    //newComment.date_created = date_created;
+    //newComment.user_id = req.user.id;
 
     CommentsService.postComment(knexInstance, newComment)
       .then((comment) => {
